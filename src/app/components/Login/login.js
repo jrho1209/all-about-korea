@@ -42,7 +42,7 @@ export default function Login() {
         
         {/* 에러 메시지 - 로그인 폼 바로 위에 */}
         {loginError && (
-          <div className="w-full mb-4 px-4 py-4 bg-gradient-to-r from-red-600 via-pink-500 to-red-600 text-white text-xl font-bold rounded-xl shadow-lg text-center border-2 border-red-300 animate-bounce">
+          <div className="w-full mb-4 px-4 py-4 bg-red-700 text-white text-xl font-bold rounded-xl shadow-lg text-center border-2 border-red-300 animate-bounce">
             {loginError}
           </div>
         )}

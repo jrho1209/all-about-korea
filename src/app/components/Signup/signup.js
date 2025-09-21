@@ -127,7 +127,19 @@ export default function Signup() {
       <section className="w-full max-w-sm bg-gray-800 rounded-2xl shadow-xl p-8 flex flex-col items-center">
         <h1 className="text-2xl font-extrabold text-white mb-2">Sign up for an account</h1>
         <p className="text-gray-300 mb-6 text-center">Create your account to get started.</p>
-        
+
+        {/* 에러/성공 메시지 - 폼 바로 위에 표시 */}
+        {submitError && (
+          <div className="w-full mb-4 px-4 py-4 bg-red-700 text-white text-xl font-bold rounded-xl shadow-lg text-center border-2 border-red-300 animate-bounce">
+            {submitError}
+          </div>
+        )}
+        {submitSuccess && (
+          <div className="w-full mb-4 px-4 py-4 bg-green-700 text-white text-xl font-bold rounded-xl shadow-lg text-center border-2 border-green-300 animate-bounce">
+            {submitSuccess}
+          </div>
+        )}
+
         {/* 이름 */}
         <div className="w-full mb-4">
           <input
@@ -228,16 +240,6 @@ export default function Signup() {
           <svg width="20" height="20" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.73 1.22 9.24 3.22l6.93-6.93C35.61 2.36 30.13 0 24 0 14.61 0 6.27 0 2.44 14.09l8.51 6.62C13.13 14.13 18.13 9.5 24 9.5z"/><path fill="#34A853" d="M46.09 24.59c0-1.64-.15-3.22-.43-4.75H24v9.01h12.43c-.54 2.91-2.17 5.38-4.63 7.04l7.19 5.59C43.73 37.13 46.09 31.31 46.09 24.59z"/><path fill="#FBBC05" d="M10.95 28.71c-.48-1.44-.76-2.97-.76-4.71s.28-3.27.76-4.71l-8.51-6.62C1.09 16.87 0 20.29 0 24c0 3.71 1.09 7.13 2.44 10.33l8.51 6.62z"/><path fill="#EA4335" d="M24 48c6.13 0 11.61-2.36 15.93-6.45l-7.19-5.59c-2.01 1.35-4.59 2.15-7.74 2.15-5.87 0-10.87-4.63-12.95-10.91l-8.51 6.62C6.27 42.26 14.61 48 24 48z"/></g></svg>
           Sign up with Google
         </button>
-        {submitError && (
-          <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 px-6 py-4 bg-red-700 text-white text-xl font-bold rounded-xl shadow-lg text-center animate-bounce">
-            {submitError}
-          </div>
-        )}
-        {submitSuccess && (
-          <div className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 px-6 py-4 bg-green-700 text-white text-xl font-bold rounded-xl shadow-lg text-center animate-bounce">
-            {submitSuccess}
-          </div>
-        )}
         <p className="text-gray-400 text-sm mt-2">
           Already have an account? <a href="/login" className="text-blue-400 hover:underline">Log in</a>
         </p>
