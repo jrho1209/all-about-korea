@@ -35,6 +35,11 @@ const handler = NextAuth({
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60, // 1시간 (초 단위)
+    updateAge: 60 * 10, // 10분마다 갱신
+  },
 });
 
 export { handler as GET, handler as POST };
