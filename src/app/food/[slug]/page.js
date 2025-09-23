@@ -1,9 +1,10 @@
 import { sanityClient } from "@/sanity/client";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function FoodPost({ params }) {
-  const { slug } = params;
+  const { slug } = await params;  // ← await 추가
   
   const post = await sanityClient.fetch(
     `*[_type == "post" && (slug.current == "${slug}" || _id == "${slug}")][0]{
@@ -12,7 +13,9 @@ export default async function FoodPost({ params }) {
       "author": author->name,
       body,
       publishedAt,
-      "slug": slug.current
+      "slug": slug.current,
+      "imageUrl": mainImage.asset->url,
+      "imageAlt": mainImage.alt
     }`,
     {},
     { cache: "no-store" }
@@ -43,13 +46,43 @@ export default async function FoodPost({ params }) {
         Back to Food Posts
       </Link>
 
-      {/* 포스트 헤더 */}
-      <article className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-        <header className="mb-8 pb-6 border-b border-gray-200">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4 leading-tight">
-            {post.title}
-          </h1>
-          <div className="flex items-center text-gray-600 space-x-4">
+      {/* 포스트 아티클 */}
+      <article className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        {/* 메인 이미지 */}
+        {post.imageUrl && (
+          <div className="relative h-96 w-full">
+            <Image
+              src={post.imageUrl}
+              alt={post.imageAlt || post.title}
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* 이미지 위 그라데이션 오버레이 */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+            
+            {/* 이미지 위에 타이틀 오버레이 (선택사항) */}
+            <div className="absolute bottom-8 left-8 right-8">
+              <h1 className="text-4xl font-bold text-white mb-2 leading-tight drop-shadow-lg">
+                {post.title}
+              </h1>
+            </div>
+          </div>
+        )}
+
+        {/* 포스트 콘텐츠 */}
+        <div className="p-8">
+          {/* 이미지가 없는 경우 여기에 타이틀 표시 */}
+          {!post.imageUrl && (
+            <header className="mb-8 pb-6 border-b border-gray-200">
+              <h1 className="text-4xl font-bold text-gray-800 mb-4 leading-tight">
+                {post.title}
+              </h1>
+            </header>
+          )}
+
+          {/* 메타데이터 */}
+          <div className="flex items-center text-gray-600 space-x-4 mb-8 pb-6 border-b border-gray-200">
             <span className="flex items-center">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -69,21 +102,21 @@ export default async function FoodPost({ params }) {
               </span>
             )}
           </div>
-        </header>
 
-        {/* 포스트 본문 */}
-        <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-          <PortableText 
-            value={post.body}
-            components={{
-              block: {
-                normal: ({children}) => <p className="mb-6 text-lg leading-relaxed">{children}</p>,
-                h1: ({children}) => <h1 className="text-3xl font-bold mt-8 mb-4 text-gray-800">{children}</h1>,
-                h2: ({children}) => <h2 className="text-2xl font-bold mt-6 mb-3 text-gray-800">{children}</h2>,
-                h3: ({children}) => <h3 className="text-xl font-bold mt-4 mb-2 text-gray-800">{children}</h3>,
-              },
-            }}
-          />
+          {/* 포스트 본문 */}
+          <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+            <PortableText 
+              value={post.body}
+              components={{
+                block: {
+                  normal: ({children}) => <p className="mb-6 text-lg leading-relaxed">{children}</p>,
+                  h1: ({children}) => <h1 className="text-3xl font-bold mt-8 mb-4 text-gray-800">{children}</h1>,
+                  h2: ({children}) => <h2 className="text-2xl font-bold mt-6 mb-3 text-gray-800">{children}</h2>,
+                  h3: ({children}) => <h3 className="text-xl font-bold mt-4 mb-2 text-gray-800">{children}</h3>,
+                },
+              }}
+            />
+          </div>
         </div>
       </article>
 
