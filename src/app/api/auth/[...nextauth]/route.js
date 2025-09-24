@@ -34,7 +34,7 @@ const handler = NextAuth({
       },
     }),
   ],
-  adapter: MongoDBAdapter(clientPromise),
+  // adapter: MongoDBAdapter(clientPromise), // 임시 비활성화
   session: {
     strategy: "jwt",
     maxAge: 60 * 60, // 1시간 (초 단위)
