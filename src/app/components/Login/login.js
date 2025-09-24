@@ -27,7 +27,7 @@ export default function Login() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-900 px-4">
+    <main className="min-h-screen flex flex-col items-center justify-center pb-20 bg-gray-900 px-4">
       <section className="w-full max-w-sm bg-gray-800 rounded-2xl shadow-xl p-8 flex flex-col items-center">
         {/* 아이콘 */}
         <div className="mb-6">
