@@ -35,20 +35,20 @@ export default function About() {
               
               <div className="space-y-6 text-lg leading-relaxed text-gray-700">
                 <p>
-                  안녕하세요! I'm James Rho, a <span className="font-bold text-red-500">Korean-American developer</span> with 
+                  안녕하세요! I&apos;m James Rho, a <span className="font-bold text-red-500">Korean-American developer</span> with 
                   dual citizenship and an insatiable passion for culture. While I spend my days crafting code and building 
                   digital experiences, my heart beats for the rich tapestry of Korean culture and its global influence.
                 </p>
                 
                 <p>
                   Growing up between two worlds has given me a unique perspective on how culture transcends borders. 
-                  I'm particularly <span className="font-bold text-blue-500">obsessed with food</span> – from discovering 
-                  hidden gems in Seoul's alleyways to finding the perfect Korean BBQ spot in LA. Every dish tells a story, 
+                  I&apos;m particularly <span className="font-bold text-blue-500">obsessed with food</span> – from discovering 
+                  hidden gems in Seoul&apos;s alleyways to finding the perfect Korean BBQ spot in LA. Every dish tells a story, 
                   and I love sharing those stories with the world.
                 </p>
                 
                 <p>
-                  When I'm not coding (always with music in my ears 🎵), you'll find me exploring nature trails, 
+                  When I&apos;m not coding (always with music in my ears 🎵), you&apos;ll find me exploring nature trails, 
                   binge-watching the latest K-dramas, or analyzing the cinematography of Korean films. 
                   I believe that <span className="font-bold text-purple-500">culture is the bridge</span> that connects 
                   us all, and through K-Everything, I want to share that bridge with you.
@@ -84,7 +84,7 @@ export default function About() {
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🌲</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Nature</h3>
                 <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                  Finding inspiration in Korea's beautiful landscapes, from Jeju's coastlines to the mountains of Seoraksan.
+                  Finding inspiration in Korea&apos;s beautiful landscapes, from Jeju&apos;s coastlines to the mountains of Seoraksan.
                 </p>
               </div>
             </div>

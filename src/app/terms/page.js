@@ -21,7 +21,7 @@ export default function Terms() {
               })}
             </p>
             <p className="text-gray-700">
-              Welcome to All About Korea! These Terms of Service ("Terms") govern your use of our website 
+              Welcome to All About Korea! These Terms of Service (&quot;Terms&quot;) govern your use of our website 
               and services. By accessing or using our site, you agree to be bound by these Terms.
             </p>
           </div>
@@ -33,7 +33,7 @@ export default function Terms() {
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
               <p className="text-gray-700 mb-4">
                 By accessing and using All About Korea, you accept and agree to be bound by the terms and 
-                provision of this agreement. Additionally, when using this website's particular services, 
+                provision of this agreement. Additionally, when using this website&apos;s particular services, 
                 you shall be subject to any posted guidelines or rules applicable to such services.
               </p>
               <div className="bg-white border border-blue-300 rounded p-4">
@@ -177,7 +177,7 @@ export default function Terms() {
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                 <h3 className="text-lg font-semibold text-yellow-800 mb-3">⚠️ Information Accuracy</h3>
                 <p className="text-gray-700 text-sm">
-                  While we strive for accuracy, the information on All About Korea is provided "as is" 
+                  While we strive for accuracy, the information on All About Korea is provided &quot;as is&quot; 
                   without warranty. Cultural information, restaurant recommendations, and travel advice 
                   may change over time.
                 </p>
