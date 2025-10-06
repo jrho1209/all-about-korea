@@ -16,6 +16,13 @@ const pageConfig = {
     bgGradient: "from-slate-900 via-blue-900 to-slate-900",
     emoji: "👨‍💻"
   },
+  "/agencies": {
+    title: "Travel Agencies",
+    subtitle: "Connect with Professional Travel Agencies in Daejeon",
+    gradient: "from-red-500 via-orange-500 to-pink-500",
+    bgGradient: "from-red-900 via-orange-900 to-pink-900",
+    emoji: "🏢"
+  },
   "/food": {
     title: "Korean Food",
     subtitle: "Discover Authentic Flavors & Hidden Local Gems",

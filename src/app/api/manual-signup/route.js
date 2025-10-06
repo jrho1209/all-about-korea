@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 export async function POST(request) {
   const body = await request.json();
-  const { name, email, password, phone } = body;
+  const { name, email, password, phone, role = "user" } = body;
 
   if (!name || !email || !password) {
     return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
@@ -23,7 +23,27 @@ export async function POST(request) {
 
     // 비밀번호는 반드시 hash
     const hashedPassword = await bcrypt.hash(password, 10);
-    await users.insertOne({ name, email, password: hashedPassword, phone, createdAt: new Date() });
+    
+    const userData = { 
+      name, 
+      email, 
+      password: hashedPassword, 
+      phone, 
+      role,
+      createdAt: new Date() 
+    };
+
+    // Agency 계정의 경우 agencyId 생성
+    if (role === 'agency') {
+      const result = await users.insertOne(userData);
+      userData.agencyId = result.insertedId.toString();
+      await users.updateOne(
+        { _id: result.insertedId },
+        { $set: { agencyId: userData.agencyId } }
+      );
+    } else {
+      await users.insertOne(userData);
+    }
 
     return NextResponse.json({ message: "Signup successful" }, { status: 201 });
   } catch (err) {

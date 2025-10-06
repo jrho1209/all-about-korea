@@ -5,146 +5,190 @@ export default function About() {
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
       <PageHero />
 
-      {/* James Profile Section */}
+      {/* Platform Introduction */}
       <section className="py-20 bg-white text-gray-900">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Profile Image & Quick Info */}
-            <div className="relative">
-              <div className="relative w-80 h-80 mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-400 to-blue-500 rounded-full blur-xl opacity-30"></div>
-                <div className="relative w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center border-4 border-white shadow-2xl">
-                  <span className="text-6xl">👨‍💻</span>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-8">
+              Daejeon Travel <span className="text-red-500">Platform</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              A trusted platform connecting international travelers with verified local travel agencies in Daejeon. 
+              Experience safe and extraordinary journeys through Korea's science and technology hub.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12 mb-20">
+            {/* Mission */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-3xl">🎯</span>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
+              <p className="text-gray-600 leading-relaxed">
+                To help international travelers discover the hidden gems of Daejeon and connect them 
+                safely and conveniently with local travel agencies.
+              </p>
+            </div>
+
+            {/* Vision */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-3xl">🔮</span>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
+              <p className="text-gray-600 leading-relaxed">
+                To become the leading travel platform for Daejeon, contributing to elevating 
+                the city's status as an international tourist destination.
+              </p>
+            </div>
+
+            {/* Values */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-3xl">💎</span>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Values</h3>
+              <p className="text-gray-600 leading-relaxed">
+                We prioritize transparency, reliability, and customer satisfaction, 
+                building an ecosystem where all stakeholders can win together.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              How It Works?
+            </h2>
+            <p className="text-xl text-gray-600">
+              Plan your perfect Daejeon trip in 3 simple steps
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12">
+            {/* Step 1 */}
+            <div className="text-center">
+              <div className="relative">
+                <div className="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-white text-2xl font-bold">1</span>
                 </div>
               </div>
-              
-              {/* Floating Cards */}
-              <div className="absolute -top-8 -right-8 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                🇰🇷 Korean
-              </div>
-              <div className="absolute -bottom-8 -left-8 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                🇺🇸 American
-              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Browse Agencies</h3>
+              <p className="text-gray-600">
+                Explore verified local travel agencies in Daejeon and 
+                check their services and specialties.
+              </p>
             </div>
 
-            {/* Biography */}
-            <div className="space-y-8">
-              <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-8">
-                Meet <span className="text-red-500">James Rho</span>
-              </h2>
-              
-              <div className="space-y-6 text-lg leading-relaxed text-gray-700">
-                <p>
-                  안녕하세요! I&apos;m James Rho, a <span className="font-bold text-red-500">Korean-American developer</span> with 
-                  dual citizenship and an insatiable passion for culture. While I spend my days crafting code and building 
-                  digital experiences, my heart beats for the rich tapestry of Korean culture and its global influence.
-                </p>
-                
-                <p>
-                  Growing up between two worlds has given me a unique perspective on how culture transcends borders. 
-                  I&apos;m particularly <span className="font-bold text-blue-500">obsessed with food</span> – from discovering 
-                  hidden gems in Seoul&apos;s alleyways to finding the perfect Korean BBQ spot in LA. Every dish tells a story, 
-                  and I love sharing those stories with the world.
-                </p>
-                
-                <p>
-                  When I&apos;m not coding (always with music in my ears 🎵), you&apos;ll find me exploring nature trails, 
-                  binge-watching the latest K-dramas, or analyzing the cinematography of Korean films. 
-                  I believe that <span className="font-bold text-purple-500">culture is the bridge</span> that connects 
-                  us all, and through K-Everything, I want to share that bridge with you.
-                </p>
+            {/* Step 2 */}
+            <div className="text-center">
+              <div className="relative">
+                <div className="w-24 h-24 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-white text-2xl font-bold">2</span>
+                </div>
               </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Send Inquiry</h3>
+              <p className="text-gray-600">
+                Send your travel dates, group size, and 
+                preferred experiences to your chosen agency.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center">
+              <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-white text-2xl font-bold">3</span>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Plan Your Trip</h3>
+              <p className="text-gray-600">
+                Receive customized proposals from agencies and 
+                plan your perfect Daejeon adventure.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Interests Grid */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Why Choose Us */}
+      <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-black text-center text-gray-900 mb-16">
-            My <span className="text-red-500">Passions</span>
-          </h2>
-          
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Why Choose Us?
+            </h2>
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Food */}
-            <div className="group h-full">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-red-500 h-full flex flex-col">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🍜</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Food Culture</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                  From street food to fine dining, exploring the authentic flavors that define Korean cuisine and sharing hidden culinary gems.
-                </p>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🛡️</span>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Verified Agencies</h3>
+              <p className="text-gray-600 text-sm">
+                Only trusted travel agencies that passed rigorous screening
+              </p>
             </div>
 
-            {/* Nature */}
-            <div className="group h-full">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-green-500 h-full flex flex-col">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🌲</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Nature</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                  Finding inspiration in Korea&apos;s beautiful landscapes, from Jeju&apos;s coastlines to the mountains of Seoraksan.
-                </p>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">💬</span>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Easy Communication</h3>
+              <p className="text-gray-600 text-sm">
+                Intuitive platform for seamless communication with agencies
+              </p>
             </div>
 
-            {/* Music & Development */}
-            <div className="group h-full">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-purple-500 h-full flex flex-col">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🎵</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Music & Code</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                  Coding with K-pop, indie, and lo-fi beats. Music fuels creativity and makes every development session better.
-                </p>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🎨</span>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Customized Service</h3>
+              <p className="text-gray-600 text-sm">
+                Personalized travel plans based on your preferences
+              </p>
             </div>
 
-            {/* Entertainment */}
-            <div className="group h-full">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-blue-500 h-full flex flex-col">
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🎬</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Films & Dramas</h3>
-                <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                  Analyzing the storytelling mastery of Korean cinema and the emotional depth of K-dramas during downtime.
-                </p>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">⭐</span>
               </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Quality Assurance</h3>
+              <p className="text-gray-600 text-sm">
+                Continuous service quality management through review system
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission Statement */}
-      <section className="py-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
+      {/* Contact Section */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-black mb-8">
-            The <span className="text-red-400">K-Everything</span> Mission
+          <h2 className="text-4xl font-bold text-gray-900 mb-8">
+            Have More Questions?
           </h2>
-          
-          <p className="text-xl md:text-2xl leading-relaxed text-gray-300 mb-12">
-            To bridge cultures through authentic storytelling, connecting global audiences with the heart and soul of Korean culture. 
-            Every post, every recommendation, every story is crafted to inspire curiosity and foster genuine appreciation 
-            for the beautiful complexity of Korean culture.
+          <p className="text-xl text-gray-600 mb-8">
+            Feel free to contact us anytime. We're here to help you create amazing memories in Daejeon.
           </p>
-          
-          <div className="grid md:grid-cols-3 gap-8 mt-16">
-            <div className="text-center">
-              <div className="text-4xl mb-4">🌍</div>
-              <h3 className="text-xl font-bold mb-2">Global Community</h3>
-              <p className="text-gray-400 text-sm">Connecting cultures across continents</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-4xl mb-4">✨</div>
-              <h3 className="text-xl font-bold mb-2">Authentic Stories</h3>
-              <p className="text-gray-400 text-sm">Real experiences, genuine recommendations</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-4xl mb-4">🚀</div>
-              <h3 className="text-xl font-bold mb-2">Cultural Bridge</h3>
-              <p className="text-gray-400 text-sm">Making Korean culture accessible to everyone</p>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="mailto:support@daejeontravel.com" 
+              className="bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition-colors"
+            >
+              Contact Us
+            </a>
+            <a 
+              href="/agencies" 
+              className="bg-white text-red-600 border-2 border-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-50 transition-colors"
+            >
+              Browse Agencies
+            </a>
           </div>
         </div>
       </section>

@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "All about Korea",
-  description: "Your ultimate guide to K-Food, K-Drama, K-Movie, K-Music, and Travel in Korea",
+  title: "Daejeon Travel Platform",
+  description: "Connect with trusted local travel agencies in Daejeon - Experience safe and extraordinary journeys through Korea's science city",
 };
 
 export default function RootLayout({ children }) {

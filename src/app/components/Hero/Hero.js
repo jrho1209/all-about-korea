@@ -1,4 +1,5 @@
 import styles from './Hero.module.css';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -35,10 +36,24 @@ export default function Hero() {
       </div>
       {/* 텍스트 */}
       <div className="relative z-10 text-center">
-        <h1 className="text-5xl font-extrabold text-white mb-4 drop-shadow-lg">K-Everything</h1>
-        <p className="text-xl text-white drop-shadow">
-          Discover the best of South Korea: Food, Travel, Drama, Movie, and Music!
+        <h1 className="text-5xl font-extrabold text-white mb-4 drop-shadow-lg">Daejeon Travel Platform</h1>
+        <p className="text-xl text-white drop-shadow mb-8">
+          Connecting International Travelers with Local Agencies
         </p>
+        <div className="flex gap-4 justify-center">
+          <Link 
+            href="/agencies"
+            className="bg-red-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition-colors transform hover:scale-105 shadow-lg"
+          >
+            Find Agencies
+          </Link>
+          <Link 
+            href="/about"
+            className="bg-white text-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-colors transform hover:scale-105 shadow-lg"
+          >
+            Learn More
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Sample Agencies</title>
+</head>
+<body>
+    <h1>Create Sample Agencies</h1>
+    <button onclick="createSampleAgencies()">Create Sample Data</button>
+    <div id="result"></div>
+
+    <script>
+        async function createSampleAgencies() {
+            try {
+                const response = await fetch('/api/create-sample-agencies', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -5,7 +5,7 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "./lib/mongodb"; // MongoDB 연결 유틸
 import bcrypt from "bcryptjs";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -37,6 +37,8 @@ const handler = NextAuth({
           name: user.name,
           email: user.email,
           phone: user.phone,
+          role: user.role || 'user',
+          agencyId: user.agencyId,
         };
       },
     }),
@@ -47,6 +49,22 @@ const handler = NextAuth({
     maxAge: 60 * 60, // 1시간 (초 단위)
     updateAge: 60 * 10, // 10분마다 갱신
   },
-});
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+        token.agencyId = user.agencyId;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.role = token.role;
+      session.user.agencyId = token.agencyId;
+      return session;
+    },
+  },
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

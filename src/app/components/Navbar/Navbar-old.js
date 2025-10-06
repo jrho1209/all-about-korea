@@ -4,8 +4,18 @@ import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 
 export default function Navbar() {
-  const { data: session } = useSession();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSessi                {session.user?.role === 'agency' && (
+                  <Link 
+                    href="/agency-dashboard"
+                    onClick={closeMenu}
+                    className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="mr-3">📈</span>
+                      Dashboard
+                    </span>
+                  </Link>
+                )}st [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -24,7 +34,7 @@ export default function Navbar() {
             <Link href="/" onClick={closeMenu}>
               <img
                 src="/logo/logo.png"
-                alt="Daejeon Travel Platform Logo"
+                alt="All About Korea Logo"
                 className="h-12 w-auto hover:scale-105 transition-transform duration-200"
               />
             </Link>
@@ -33,22 +43,40 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <Link 
-              href={session?.user ? "/about" : "/login"}
-              className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
-            >
-              About
-            </Link>
-            <Link 
               href={session?.user ? "/agencies" : "/login"}
               className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
             >
               Agencies
             </Link>
             <Link 
+              href={session?.user ? "/about" : "/login"}
+              className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
+            >
+              About
+            </Link>
+            <Link 
               href={session?.user ? "/food" : "/login"}
               className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
             >
               Food
+            </Link>
+            <Link 
+              href={session?.user ? "/drama" : "/login"}
+              className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
+            >
+              K-Drama
+            </Link>
+            <Link 
+              href={session?.user ? "/movies" : "/login"}
+              className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
+            >
+              K-Movie
+            </Link>
+            <Link 
+              href={session?.user ? "/music" : "/login"}
+              className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
+            >
+              K-Music
             </Link>
             <Link 
               href={session?.user ? "/travel" : "/login"}
@@ -67,32 +95,11 @@ export default function Navbar() {
                     Dashboard
                   </Link>
                 )}
-                {session.user?.role !== 'agency' && session.user?.email !== 'admin@allaboutkorea.com' && (
-                  <Link 
-                    href="/user-dashboard"
-                    className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
-                  >
-                    My Travel
-                  </Link>
-                )}
-                {session.user?.email === 'admin@allaboutkorea.com' && (
-                  <Link 
-                    href="/admin-dashboard"
-                    className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
-                  >
-                    Admin
-                  </Link>
-                )}
                 <span className="text-sm font-medium text-gray-700 bg-gray-100 px-3 py-2 rounded-full">
                   👋 {session.user.name || session.user.email}
                   {session.user?.role === 'agency' && (
                     <span className="ml-1 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
                       Agency
-                    </span>
-                  )}
-                  {session.user?.email === 'admin@allaboutkorea.com' && (
-                    <span className="ml-1 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">
-                      Admin
                     </span>
                   )}
                 </span>
@@ -138,16 +145,6 @@ export default function Navbar() {
       <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg">
           <Link 
-            href={session?.user ? "/about" : "/login"}
-            onClick={closeMenu}
-            className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
-          >
-            <span className="flex items-center">
-              <span className="mr-3">ℹ️</span>
-              About
-            </span>
-          </Link>
-          <Link 
             href={session?.user ? "/agencies" : "/login"}
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
@@ -158,6 +155,16 @@ export default function Navbar() {
             </span>
           </Link>
           <Link 
+            href={session?.user ? "/about" : "/login"}
+            onClick={closeMenu}
+            className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
+          >
+            <span className="flex items-center">
+              <span className="mr-3">ℹ️</span>
+              About
+            </span>
+          </Link>
+          <Link 
             href={session?.user ? "/food" : "/login"}
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
@@ -165,6 +172,36 @@ export default function Navbar() {
             <span className="flex items-center">
               <span className="mr-3">🍜</span>
               Food
+            </span>
+          </Link>
+          <Link 
+            href={session?.user ? "/drama" : "/login"}
+            onClick={closeMenu}
+            className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
+          >
+            <span className="flex items-center">
+              <span className="mr-3">📺</span>
+              K-Drama
+            </span>
+          </Link>
+          <Link 
+            href={session?.user ? "/movies" : "/login"}
+            onClick={closeMenu}
+            className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
+          >
+            <span className="flex items-center">
+              <span className="mr-3">🎬</span>
+              K-Movie
+            </span>
+          </Link>
+          <Link 
+            href={session?.user ? "/music" : "/login"}
+            onClick={closeMenu}
+            className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
+          >
+            <span className="flex items-center">
+              <span className="mr-3">🎵</span>
+              K-Music
             </span>
           </Link>
           <Link 
@@ -190,31 +227,7 @@ export default function Navbar() {
                   >
                     <span className="flex items-center">
                       <span className="mr-3">📊</span>
-                      Dashboard
-                    </span>
-                  </Link>
-                )}
-                {session.user?.role !== 'agency' && session.user?.email !== 'admin@allaboutkorea.com' && (
-                  <Link 
-                    href="/user-dashboard"
-                    onClick={closeMenu}
-                    className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
-                  >
-                    <span className="flex items-center">
-                      <span className="mr-3">🌏</span>
-                      My Travel
-                    </span>
-                  </Link>
-                )}
-                {session.user?.email === 'admin@allaboutkorea.com' && (
-                  <Link 
-                    href="/admin-dashboard"
-                    onClick={closeMenu}
-                    className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
-                  >
-                    <span className="flex items-center">
-                      <span className="mr-3">⚙️</span>
-                      Admin
+                      대시보드
                     </span>
                   </Link>
                 )}
@@ -225,11 +238,6 @@ export default function Navbar() {
                     {session.user?.role === 'agency' && (
                       <span className="ml-2 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
                         Agency
-                      </span>
-                    )}
-                    {session.user?.email === 'admin@allaboutkorea.com' && (
-                      <span className="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">
-                        Admin
                       </span>
                     )}
                   </span>
