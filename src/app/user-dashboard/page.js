@@ -16,6 +16,7 @@ export default function UserDashboard() {
   const [activeView, setActiveView] = useState('dashboard');
   const [activeInquiryTab, setActiveInquiryTab] = useState('in-progress'); // 'in-progress', 'confirmed', 'cancelled'
   const [replyMessages, setReplyMessages] = useState({}); // Store reply messages for each inquiry
+  const [calendarDate, setCalendarDate] = useState(new Date()); // Calendar navigation state
 
   // Safe date formatting functions
   const formatDate = (dateValue) => {
@@ -614,6 +615,8 @@ export default function UserDashboard() {
                   style={{ height: 500 }}
                   views={['month', 'week', 'day']}
                   defaultView='month'
+                  date={calendarDate}
+                  onNavigate={(date) => setCalendarDate(date)}
                   popup
                   eventPropGetter={(event) => {
                     const backgroundColor = event.resource.color;

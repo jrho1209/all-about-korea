@@ -11,6 +11,7 @@ export default function AgencyDashboardPage() {
   const [inquiries, setInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pending');
+  const [calendarDate, setCalendarDate] = useState(new Date()); // Calendar navigation state
 
   // Calendar setup
   const localizer = momentLocalizer(moment);
@@ -628,9 +629,20 @@ export default function AgencyDashboardPage() {
                   events={inquiries
                     .filter(i => i.status === 'confirmed')
                     .map(inquiry => {
-                      // Parse travel dates
-                      const dates = inquiry.travelDates.split(' - ');
+                      // Handle different date formats and separators
+                      let dates;
                       let startDate, endDate;
+                      
+                      // Try different separators: ' - ', ' to ', ' ~ '
+                      if (inquiry.travelDates.includes(' to ')) {
+                        dates = inquiry.travelDates.split(' to ');
+                      } else if (inquiry.travelDates.includes(' - ')) {
+                        dates = inquiry.travelDates.split(' - ');
+                      } else if (inquiry.travelDates.includes(' ~ ')) {
+                        dates = inquiry.travelDates.split(' ~ ');
+                      } else {
+                        dates = [inquiry.travelDates]; // Single day
+                      }
                       
                       if (dates.length === 2) {
                         // Multi-day trip
@@ -686,6 +698,8 @@ export default function AgencyDashboardPage() {
                   }}
                   views={['month', 'week', 'day']}
                   defaultView='month'
+                  date={calendarDate}
+                  onNavigate={(date) => setCalendarDate(date)}
                   popup
                   tooltipAccessor={(event) => 
                     `${event.resource.inquiry.userName} - ${event.resource.inquiry.groupSize} people`
