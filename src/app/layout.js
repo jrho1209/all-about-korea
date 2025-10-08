@@ -17,6 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Daejeon Travel Platform",
   description: "Connect with trusted local travel agencies in Daejeon - Experience safe and extraordinary journeys through Korea's science city",
+  icons: {
+    icon: '/logo/brandicon.png',
+    shortcut: '/logo/brandicon.png',
+    apple: '/logo/brandicon.png',
+  },
 };
 
 export default function RootLayout({ children }) {
