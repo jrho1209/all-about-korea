@@ -21,7 +21,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Comic Sans MS', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', cursive, fantasy, sans-serif;
+  font-family: 'Comic Sans MS', 'Open Sans', 'Roboto', 'Noto Sans', 'Arial', 'Helvetica', sans-serif;
 }
 
 
