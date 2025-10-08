@@ -46,8 +46,8 @@ export default function UserDashboard() {
   
   // Color palette for different agencies/statuses
   const statusColors = {
-    'pending': '#F59E0B',
-    'in-progress': '#3B82F6', 
+    'pending': '#FFCB05',
+    'in-progress': '#5C7F9A', 
     'confirmed': '#10B981',
     'cancelled': '#EF4444'
   };
@@ -85,15 +85,30 @@ export default function UserDashboard() {
   const getStatusColor = (status) => {
     switch (status) {
       case 'confirmed':
-        return 'bg-green-100 text-green-800';
+        return 'text-white' + ' ' + 'font-semibold';
       case 'in-progress':
-        return 'bg-blue-100 text-blue-800';
+        return 'text-white' + ' ' + 'font-semibold';
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'text-white' + ' ' + 'font-semibold';
       case 'cancelled':
-        return 'bg-red-100 text-red-800';
+        return 'text-white' + ' ' + 'font-semibold';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'text-white' + ' ' + 'font-semibold';
+    }
+  };
+
+  const getStatusBgColor = (status) => {
+    switch (status) {
+      case 'confirmed':
+        return '#10B981';
+      case 'in-progress':
+        return '#5C7F9A';
+      case 'pending':
+        return '#FFCB05';
+      case 'cancelled':
+        return '#EF4444';
+      default:
+        return '#8D6E63';
     }
   };
 
@@ -151,8 +166,8 @@ export default function UserDashboard() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-600"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2" style={{borderBottomColor: '#B71C1C'}}></div>
+          <p className="mt-4" style={{color: '#8D6E63'}}>Loading dashboard...</p>
         </div>
       </div>
     );
@@ -162,8 +177,9 @@ export default function UserDashboard() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Login Required</h2>
-          <Link href="/login" className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700">
+          <h2 className="text-2xl font-bold mb-4" style={{color: '#B71C1C'}}>Login Required</h2>
+          <Link href="/login" className="px-6 py-3 rounded-lg text-white hover:opacity-90 transition-opacity"
+                style={{backgroundColor: '#B71C1C'}}>
             Login
           </Link>
         </div>
@@ -175,9 +191,10 @@ export default function UserDashboard() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h2>
-          <p className="text-gray-600 mb-4">This page is for travelers only.</p>
-          <Link href="/agency-dashboard" className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700">
+          <h2 className="text-2xl font-bold mb-4" style={{color: '#B71C1C'}}>Access Denied</h2>
+          <p className="mb-4" style={{color: '#8D6E63'}}>This page is for travelers only.</p>
+          <Link href="/agency-dashboard" className="px-6 py-3 rounded-lg text-white hover:opacity-90 transition-opacity"
+                style={{backgroundColor: '#B71C1C'}}>
             Go to Agency Dashboard
           </Link>
         </div>
@@ -190,37 +207,45 @@ export default function UserDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold mb-2" style={{color: '#B71C1C'}}>
             My Travel Dashboard
           </h1>
-          <p className="text-gray-600">
+          <p style={{color: '#8D6E63'}}>
             Welcome back, {session.user.name || session.user.email}!
           </p>
         </div>
 
         {/* View Toggle */}
         <div className="mb-8">
-          <div className="border-b border-gray-200">
+          <div style={{borderBottomColor: '#8D6E63', borderBottomWidth: '1px'}}>
             <nav className="-mb-px flex space-x-8">
               <button
                 onClick={() => setActiveView('dashboard')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
                   activeView === 'dashboard'
-                    ? 'border-red-500 text-red-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'text-white'
+                    : 'border-transparent hover:border-gray-300'
                 }`}
+                style={{
+                  borderBottomColor: activeView === 'dashboard' ? '#B71C1C' : 'transparent',
+                  color: activeView === 'dashboard' ? '#B71C1C' : '#8D6E63'
+                }}
               >
-                📊 Dashboard Overview
+                Dashboard Overview
               </button>
               <button
                 onClick={() => setActiveView('calendar')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
                   activeView === 'calendar'
-                    ? 'border-red-500 text-red-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'text-white'
+                    : 'border-transparent hover:border-gray-300'
                 }`}
+                style={{
+                  borderBottomColor: activeView === 'calendar' ? '#B71C1C' : 'transparent',
+                  color: activeView === 'calendar' ? '#B71C1C' : '#8D6E63'
+                }}
               >
-                🗓️ My Travel Calendar
+                My Travel Calendar
               </button>
             </nav>
           </div>
@@ -231,62 +256,62 @@ export default function UserDashboard() {
           <>
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #B71C1C'}}>
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <span className="text-2xl">📝</span>
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-sm font-semibold" style={{color: '#B71C1C'}}>ALL</span>
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Total Inquiries</h3>
-                    <p className="text-3xl font-bold text-blue-600">{inquiries.length}</p>
+                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>Total Inquiries</h3>
+                    <p className="text-3xl font-bold" style={{color: '#B71C1C'}}>{inquiries.length}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #5C7F9A'}}>
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <span className="text-2xl">💬</span>
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-sm font-semibold" style={{color: '#5C7F9A'}}>PROG</span>
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">In Progress</h3>
-                    <p className="text-3xl font-bold text-blue-600">
+                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>In Progress</h3>
+                    <p className="text-3xl font-bold" style={{color: '#5C7F9A'}}>
                       {inquiries.filter(i => i.status === 'pending' || i.status === 'in-progress').length}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #10B981'}}>
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                      <span className="text-2xl">✅</span>
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-xl">✓</span>
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Confirmed</h3>
-                    <p className="text-3xl font-bold text-green-600">
+                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>Confirmed</h3>
+                    <p className="text-3xl font-bold" style={{color: '#10B981'}}>
                       {inquiries.filter(i => i.status === 'confirmed').length}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #EF4444'}}>
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                      <span className="text-2xl">❌</span>
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-xl">✕</span>
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">Cancelled</h3>
-                    <p className="text-3xl font-bold text-red-600">
+                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>Cancelled</h3>
+                    <p className="text-3xl font-bold" style={{color: '#EF4444'}}>
                       {inquiries.filter(i => i.status === 'cancelled').length}
                     </p>
                   </div>
@@ -296,37 +321,37 @@ export default function UserDashboard() {
 
             {/* Inquiry Tabs */}
             <div className="bg-white rounded-lg shadow-sm">
-              <div className="border-b border-gray-200">
+              <div style={{borderBottomColor: '#8D6E63', borderBottomWidth: '1px'}}>
                 <nav className="-mb-px flex space-x-8 px-6">
                   <button
                     onClick={() => setActiveInquiryTab('in-progress')}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                      activeInquiryTab === 'in-progress'
-                        ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm`}
+                    style={{
+                      borderBottomColor: activeInquiryTab === 'in-progress' ? '#5C7F9A' : 'transparent',
+                      color: activeInquiryTab === 'in-progress' ? '#5C7F9A' : '#8D6E63'
+                    }}
                   >
-                    💬 In Progress ({inquiries.filter(i => i.status === 'pending' || i.status === 'in-progress').length})
+                    In Progress ({inquiries.filter(i => i.status === 'pending' || i.status === 'in-progress').length})
                   </button>
                   <button
                     onClick={() => setActiveInquiryTab('confirmed')}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                      activeInquiryTab === 'confirmed'
-                        ? 'border-green-500 text-green-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm`}
+                    style={{
+                      borderBottomColor: activeInquiryTab === 'confirmed' ? '#10B981' : 'transparent',
+                      color: activeInquiryTab === 'confirmed' ? '#10B981' : '#8D6E63'
+                    }}
                   >
-                    ✅ Confirmed ({inquiries.filter(i => i.status === 'confirmed').length})
+                    Confirmed ({inquiries.filter(i => i.status === 'confirmed').length})
                   </button>
                   <button
                     onClick={() => setActiveInquiryTab('cancelled')}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                      activeInquiryTab === 'cancelled'
-                        ? 'border-red-500 text-red-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm`}
+                    style={{
+                      borderBottomColor: activeInquiryTab === 'cancelled' ? '#EF4444' : 'transparent',
+                      color: activeInquiryTab === 'cancelled' ? '#EF4444' : '#8D6E63'
+                    }}
                   >
-                    ❌ Cancelled ({inquiries.filter(i => i.status === 'cancelled').length})
+                    Cancelled ({inquiries.filter(i => i.status === 'cancelled').length})
                   </button>
                 </nav>
               </div>
@@ -335,15 +360,16 @@ export default function UserDashboard() {
                 {/* In Progress Tab */}
                 {activeInquiryTab === 'in-progress' && (
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">Active Conversations</h3>
+                    <h3 className="text-xl font-semibold mb-4" style={{color: '#B71C1C'}}>Active Conversations</h3>
                     {inquiries.filter(i => i.status === 'pending' || i.status === 'in-progress').length === 0 ? (
                       <div className="text-center py-12">
                         <div className="text-6xl mb-4">💬</div>
-                        <h4 className="text-lg font-semibold text-gray-900 mb-2">No active conversations</h4>
-                        <p className="text-gray-600 mb-4">Start planning your Korean adventure!</p>
+                        <h4 className="text-lg font-semibold mb-2" style={{color: '#2E2E2E'}}>No active conversations</h4>
+                        <p className="mb-4" style={{color: '#8D6E63'}}>Start planning your Korean adventure!</p>
                         <Link 
                           href="/agencies"
-                          className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors inline-block"
+                          className="px-6 py-3 rounded-lg text-white hover:opacity-90 transition-opacity inline-block"
+                          style={{backgroundColor: '#B71C1C'}}
                         >
                           Find Travel Agencies
                         </Link>
@@ -351,25 +377,27 @@ export default function UserDashboard() {
                     ) : (
                       <div className="space-y-4">
                         {inquiries.filter(i => i.status === 'pending' || i.status === 'in-progress').map((inquiry) => (
-                          <div key={inquiry._id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                          <div key={inquiry._id} className="rounded-lg p-6 hover:shadow-md transition-shadow" 
+                               style={{border: '1px solid #8D6E63'}}>
                             <div className="flex justify-between items-start mb-4">
                               <div className="flex-1">
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                <h3 className="text-lg font-semibold mb-2" style={{color: '#2E2E2E'}}>
                                   {inquiry.agencyName || 'Travel Agency'}
                                 </h3>
-                                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                <div className="flex items-center space-x-4 text-sm" style={{color: '#8D6E63'}}>
                                   <span>📅 {inquiry.travelDates}</span>
                                   <span>👥 {inquiry.groupSize} people</span>
                                   <span>📋 {formatDate(inquiry.createdAt)}</span>
                                 </div>
                               </div>
-                              <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(inquiry.status)}`}>
+                              <span className={`px-3 py-1 rounded-full text-xs ${getStatusColor(inquiry.status)}`}
+                                    style={{backgroundColor: getStatusBgColor(inquiry.status)}}>
                                 {getStatusText(inquiry.status)}
                               </span>
                             </div>
                             
                             {/* Chat History */}
-                            <div className="bg-gray-50 rounded-lg p-4 mb-4 max-h-80 overflow-y-auto">
+                            <div className="rounded-lg p-4 mb-4 max-h-80 overflow-y-auto" style={{backgroundColor: '#F8F4EC'}}>
                               {/* Original Message */}
                               <div className="mb-4">
                                 <div className="flex items-start space-x-3">
@@ -421,20 +449,26 @@ export default function UserDashboard() {
                             </div>
 
                             {/* Reply Box */}
-                            <div className="border-t pt-4">
+                            <div className="border-t pt-4" style={{borderTopColor: '#8D6E63'}}>
                               <div className="flex items-center space-x-3">
                                 <div className="flex-1">
                                   <textarea
                                     value={replyMessages[inquiry._id] || ''}
                                     onChange={(e) => handleReplyChange(inquiry._id, e.target.value)}
                                     placeholder="Type your message..."
-                                    className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full p-3 rounded-lg resize-none focus:ring-2 focus:outline-none"
+                                    style={{
+                                      border: '1px solid #8D6E63',
+                                      focusRingColor: '#B71C1C',
+                                      focusBorderColor: '#B71C1C'
+                                    }}
                                     rows="2"
                                   />
                                 </div>
                                 <button
                                   onClick={() => handleSendReply(inquiry._id)}
-                                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                                  className="text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center space-x-2"
+                                  style={{backgroundColor: '#B71C1C'}}
                                 >
                                   <span>Send</span>
                                   <span>📤</span>
@@ -451,23 +485,24 @@ export default function UserDashboard() {
                 {/* Confirmed Tab */}
                 {activeInquiryTab === 'confirmed' && (
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">Confirmed Bookings</h3>
+                    <h3 className="text-xl font-semibold mb-4" style={{color: '#B71C1C'}}>Confirmed Bookings</h3>
                     {inquiries.filter(i => i.status === 'confirmed').length === 0 ? (
                       <div className="text-center py-12">
-                        <div className="text-6xl mb-4">✅</div>
-                        <h4 className="text-lg font-semibold text-gray-900 mb-2">No confirmed bookings</h4>
-                        <p className="text-gray-600">Your confirmed trips will appear here.</p>
+                        <div className="text-6xl mb-4">✓</div>
+                        <h4 className="text-lg font-semibold mb-2" style={{color: '#2E2E2E'}}>No confirmed bookings</h4>
+                        <p style={{color: '#8D6E63'}}>Your confirmed trips will appear here.</p>
                       </div>
                     ) : (
                       <div className="space-y-4">
                         {inquiries.filter(i => i.status === 'confirmed').map((inquiry) => (
-                          <div key={inquiry._id} className="border border-green-200 rounded-lg p-6 bg-green-50">
+                          <div key={inquiry._id} className="rounded-lg p-6" 
+                               style={{border: '1px solid #10B981', backgroundColor: '#F0FDF4'}}>
                             <div className="flex justify-between items-start mb-4">
                               <div className="flex-1">
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                <h3 className="text-lg font-semibold mb-2" style={{color: '#2E2E2E'}}>
                                   {inquiry.agencyName || 'Travel Agency'}
                                 </h3>
-                                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                <div className="flex items-center space-x-4 text-sm" style={{color: '#8D6E63'}}>
                                   <span>📅 {inquiry.travelDates}</span>
                                   <span>👥 {inquiry.groupSize} people</span>
                                   <span>📋 {formatDate(inquiry.createdAt)}</span>
@@ -504,40 +539,42 @@ export default function UserDashboard() {
                 {/* Cancelled Tab */}
                 {activeInquiryTab === 'cancelled' && (
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">Cancelled Inquiries</h3>
+                    <h3 className="text-xl font-semibold mb-4" style={{color: '#B71C1C'}}>Cancelled Inquiries</h3>
                     {inquiries.filter(i => i.status === 'cancelled').length === 0 ? (
                       <div className="text-center py-12">
-                        <div className="text-6xl mb-4">❌</div>
-                        <h4 className="text-lg font-semibold text-gray-900 mb-2">No cancelled inquiries</h4>
-                        <p className="text-gray-600">Your cancelled inquiries will appear here.</p>
+                        <div className="text-6xl mb-4">✕</div>
+                        <h4 className="text-lg font-semibold mb-2" style={{color: '#2E2E2E'}}>No cancelled inquiries</h4>
+                        <p style={{color: '#8D6E63'}}>Your cancelled inquiries will appear here.</p>
                       </div>
                     ) : (
                       <div className="space-y-4">
                         {inquiries.filter(i => i.status === 'cancelled').map((inquiry) => (
-                          <div key={inquiry._id} className="border border-red-200 rounded-lg p-6 bg-red-50">
+                          <div key={inquiry._id} className="rounded-lg p-6" 
+                               style={{border: '1px solid #EF4444', backgroundColor: '#FEF2F2'}}>
                             <div className="flex justify-between items-start mb-4">
                               <div className="flex-1">
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                <h3 className="text-lg font-semibold mb-2" style={{color: '#2E2E2E'}}>
                                   {inquiry.agencyName || 'Travel Agency'}
                                 </h3>
-                                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                                <div className="flex items-center space-x-4 text-sm" style={{color: '#8D6E63'}}>
                                   <span>📅 {inquiry.travelDates}</span>
                                   <span>👥 {inquiry.groupSize} people</span>
                                   <span>📋 {formatDate(inquiry.createdAt)}</span>
                                 </div>
                               </div>
-                              <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                ❌ Cancelled
+                              <span className="px-3 py-1 rounded-full text-xs font-medium text-white"
+                                    style={{backgroundColor: '#EF4444'}}>
+                                ✕ Cancelled
                               </span>
                             </div>
                             
                             <div className="mb-4">
-                              <h4 className="text-sm font-medium text-gray-700 mb-2">Original Request:</h4>
-                              <p className="text-gray-600 bg-white p-3 rounded-lg border">{inquiry.message}</p>
+                              <h4 className="text-sm font-medium mb-2" style={{color: '#2E2E2E'}}>Original Request:</h4>
+                              <p className="bg-white p-3 rounded-lg" style={{color: '#8D6E63', border: '1px solid #EF4444'}}>{inquiry.message}</p>
                             </div>
 
-                            <div className="border-t pt-4">
-                              <div className="flex items-center text-red-600">
+                            <div className="border-t pt-4" style={{borderTopColor: '#EF4444'}}>
+                              <div className="flex items-center" style={{color: '#EF4444'}}>
                                 <span className="mr-2">⚠️</span>
                                 <span className="text-sm font-medium">This inquiry has been cancelled by the travel agency.</span>
                               </div>
@@ -559,8 +596,8 @@ export default function UserDashboard() {
             {/* Calendar */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="mb-4">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">My Travel Calendar</h2>
-                <p className="text-sm text-gray-600">View all your travel plans and bookings</p>
+                <h2 className="text-2xl font-bold mb-2" style={{color: '#B71C1C'}}>My Travel Calendar</h2>
+                <p className="text-sm" style={{color: '#8D6E63'}}>View all your travel plans and bookings</p>
               </div>
               
               <div style={{ height: '600px' }}>
