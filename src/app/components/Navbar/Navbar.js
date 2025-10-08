@@ -37,7 +37,7 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <Link 
-              href={session?.user ? "/about" : "/login"}
+              href="/about"
               className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
             >
               About
@@ -153,7 +153,7 @@ export default function Navbar() {
       <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 bg-white shadow-lg">
           <Link 
-            href={session?.user ? "/about" : "/login"}
+            href="/about"
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
           >

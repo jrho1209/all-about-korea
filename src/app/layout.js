@@ -18,9 +18,16 @@ export const metadata = {
   title: "Daejeon Travel Platform",
   description: "Connect with trusted local travel agencies in Daejeon - Experience safe and extraordinary journeys through Korea's science city",
   icons: {
-    icon: '/logo/brandicon.png',
-    shortcut: '/logo/brandicon.png',
-    apple: '/logo/brandicon.png',
+    icon: [
+      { url: '/logo/brandicon.png?v=2', sizes: '32x32', type: 'image/png' },
+      { url: '/logo/brandicon.png?v=2', sizes: '16x16', type: 'image/png' },
+    ],
+    shortcut: '/logo/brandicon.png?v=2',
+    apple: '/logo/brandicon.png?v=2',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/logo/brandicon.png?v=2',
+    },
   },
 };
 
