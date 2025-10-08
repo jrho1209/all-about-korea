@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -22,9 +23,11 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" onClick={closeMenu}>
-              <img
+              <Image
                 src="/logo/logo.png"
                 alt="Daejeon Travel Platform Logo"
+                width={120}
+                height={48}
                 className="h-12 w-auto hover:scale-105 transition-transform duration-200"
               />
             </Link>
@@ -79,9 +82,11 @@ export default function Navbar() {
                 )}
                 <div className="flex items-center space-x-2 text-sm font-medium text-gray-700 bg-gray-100 px-3 py-2 rounded-full">
                   {session.user.image ? (
-                    <img
+                    <Image
                       src={session.user.image}
                       alt="Profile"
+                      width={24}
+                      height={24}
                       className="w-6 h-6 rounded-full border border-gray-300"
                     />
                   ) : (
@@ -219,9 +224,11 @@ export default function Navbar() {
                 <div className="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg">
                   <span className="flex items-center">
                     {session.user.image ? (
-                      <img
+                      <Image
                         src={session.user.image}
                         alt="Profile"
+                        width={24}
+                        height={24}
                         className="w-6 h-6 rounded-full border border-gray-300 mr-2"
                       />
                     ) : (

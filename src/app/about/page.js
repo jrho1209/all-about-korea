@@ -96,7 +96,7 @@ export default function About() {
               <h3 className="text-xl font-bold mb-4" style={{color: '#F8F4EC'}}>Connect & Chat</h3>
               <p style={{color: '#8D6E63'}}>
                 Send messages about your interests, travel dates, and 
-                what kind of authentic experiences you're looking for.
+                what kind of authentic experiences you&apos;re looking for.
               </p>
             </div>
 
@@ -151,7 +151,7 @@ export default function About() {
               </div>
               <h3 className="text-lg font-semibold mb-2" style={{color: '#2E2E2E'}}>Authentic Experiences</h3>
               <p className="text-sm" style={{color: '#8D6E63'}}>
-                Local insights and hidden gems you won't find in guidebooks
+                Local insights and hidden gems you won&apos;t find in guidebooks
               </p>
             </div>
 

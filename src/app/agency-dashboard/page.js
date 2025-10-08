@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -510,9 +511,11 @@ export default function AgencyDashboardPage() {
                         <div className="flex items-start space-x-3">
                           <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
                             {inquiry.userImage ? (
-                              <img 
+                              <Image 
                                 src={inquiry.userImage} 
                                 alt="Customer profile" 
+                                width={32}
+                                height={32}
                                 className="w-full h-full object-cover"
                               />
                             ) : (
@@ -546,9 +549,11 @@ export default function AgencyDashboardPage() {
                             </div>
                             <div className="w-8 h-8 rounded-full overflow-hidden bg-[#5C7F9A] flex items-center justify-center">
                               {agencyData?.image || session?.user?.image ? (
-                                <img 
+                                <Image 
                                   src={agencyData?.image || session.user.image} 
                                   alt="Your profile" 
+                                  width={32}
+                                  height={32}
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
