@@ -77,19 +77,34 @@ export default function Navbar() {
                     Admin
                   </Link>
                 )}
-                <span className="text-sm font-medium text-gray-700 bg-gray-100 px-3 py-2 rounded-full">
-                  👋 {session.user.name || session.user.email}
-                  {session.user?.role === 'agency' && (
-                    <span className="ml-1 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-                      Agency
-                    </span>
+                <div className="flex items-center space-x-2 text-sm font-medium text-gray-700 bg-gray-100 px-3 py-2 rounded-full">
+                  {session.user.image ? (
+                    <img
+                      src={session.user.image}
+                      alt="Profile"
+                      className="w-6 h-6 rounded-full border border-gray-300"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center">
+                      <span className="text-gray-600 text-xs font-medium">
+                        {(session.user.name || session.user.email)?.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
                   )}
-                  {session.user?.email === 'admin@allaboutkorea.com' && (
-                    <span className="ml-1 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">
-                      Admin
-                    </span>
-                  )}
-                </span>
+                  <span>
+                    {session.user.name || session.user.email}
+                    {session.user?.role === 'agency' && (
+                      <span className="ml-1 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
+                        Agency
+                      </span>
+                    )}
+                    {session.user?.email === 'admin@allaboutkorea.com' && (
+                      <span className="ml-1 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">
+                        Admin
+                      </span>
+                    )}
+                  </span>
+                </div>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors duration-200 transform hover:scale-105"
@@ -203,7 +218,19 @@ export default function Navbar() {
                 )}
                 <div className="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg">
                   <span className="flex items-center">
-                    <span className="mr-2">👋</span>
+                    {session.user.image ? (
+                      <img
+                        src={session.user.image}
+                        alt="Profile"
+                        className="w-6 h-6 rounded-full border border-gray-300 mr-2"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center mr-2">
+                        <span className="text-gray-600 text-xs font-medium">
+                          {(session.user.name || session.user.email)?.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    )}
                     {session.user.name || session.user.email}
                     {session.user?.role === 'agency' && (
                       <span className="ml-2 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">

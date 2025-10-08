@@ -128,6 +128,14 @@ export default function Signup() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-900 px-4">
       <section className="w-full max-w-sm bg-gray-800 rounded-2xl shadow-xl p-8 flex flex-col items-center">
+        {/* 로고 */}
+        <div className="mb-6 w-full bg-white rounded-lg py-4 flex justify-center">
+          <img
+            src="/logo/logo.png"
+            alt="All About Korea Logo"
+            className="h-16 w-auto"
+          />
+        </div>
         <h1 className="text-2xl font-extrabold text-white mb-2">Sign up for an account</h1>
         <p className="text-gray-300 mb-6 text-center">Create your account to get started.</p>
 
@@ -157,57 +165,6 @@ export default function Signup() {
           {nameTouched && nameError && (
             <p className="text-red-400 text-xs mt-2">{nameError}</p>
           )}
-        </div>
-
-        {/* Account Type Selection */}
-        <div className="w-full mb-4">
-          <label className="block text-white text-sm font-medium mb-2">Account Type</label>
-          <div className="grid grid-cols-2 gap-3">
-            <label className={`cursor-pointer p-3 rounded-lg border-2 transition-all ${
-              role === 'user' 
-                ? 'border-blue-400 bg-blue-900/30 text-white' 
-                : 'border-gray-600 bg-gray-700 text-gray-300 hover:border-gray-500'
-            }`}>
-              <input
-                type="radio"
-                name="role"
-                value="user"
-                checked={role === 'user'}
-                onChange={(e) => setRole(e.target.value)}
-                className="sr-only"
-              />
-              <div className="text-center">
-                <div className="text-2xl mb-1">👤</div>
-                <div className="text-sm font-medium">Traveler</div>
-                <div className="text-xs text-gray-400">Book trips</div>
-              </div>
-            </label>
-            <label className={`cursor-pointer p-3 rounded-lg border-2 transition-all ${
-              role === 'agency' 
-                ? 'border-red-400 bg-red-900/30 text-white' 
-                : 'border-gray-600 bg-gray-700 text-gray-300 hover:border-gray-500'
-            }`}>
-              <input
-                type="radio"
-                name="role"
-                value="agency"
-                checked={role === 'agency'}
-                onChange={(e) => setRole(e.target.value)}
-                className="sr-only"
-              />
-              <div className="text-center">
-                <div className="text-2xl mb-1">🏢</div>
-                <div className="text-sm font-medium">Travel Agency</div>
-                <div className="text-xs text-gray-400">Provide services</div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div className="w-full flex items-center mb-4">
-          <div className="flex-grow border-t border-gray-600"></div>
-          <span className="mx-3 text-gray-500 text-xs">Account Info</span>
-          <div className="flex-grow border-t border-gray-600"></div>
         </div>
         
         {/* 이메일 & 비밀번호 */}

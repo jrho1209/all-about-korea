@@ -29,12 +29,13 @@ export default function Login() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center pb-20 bg-gray-900 px-4">
       <section className="w-full max-w-sm bg-gray-800 rounded-2xl shadow-xl p-8 flex flex-col items-center">
-        {/* 아이콘 */}
-        <div className="mb-6">
-          <svg width="48" height="48" fill="none" viewBox="0 0 48 48">
-            <circle cx="24" cy="24" r="22" stroke="#fff" strokeWidth="4" />
-            <rect x="16" y="20" width="16" height="20" rx="8" fill="#fff" />
-          </svg>
+        {/* 로고 */}
+        <div className="mb-6 w-full bg-white rounded-lg py-4 flex justify-center">
+          <img
+            src="/logo/logo.png"
+            alt="All About Korea Logo"
+            className="h-16 w-auto"
+          />
         </div>
         {/* 타이틀 */}
         <h1 className="text-2xl font-extrabold text-white mb-2">Log in to your account</h1>

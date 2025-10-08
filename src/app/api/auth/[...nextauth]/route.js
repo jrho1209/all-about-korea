@@ -50,16 +50,22 @@ export const authOptions = {
     updateAge: 60 * 10, // 10분마다 갱신
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         token.role = user.role;
         token.agencyId = user.agencyId;
+        // 구글 로그인시 프로필 이미지 저장
+        if (account?.provider === "google") {
+          token.picture = user.image;
+        }
       }
       return token;
     },
     async session({ session, token }) {
       session.user.role = token.role;
       session.user.agencyId = token.agencyId;
+      // 세션에 프로필 이미지 추가
+      session.user.image = token.picture || session.user.image;
       return session;
     },
   },
