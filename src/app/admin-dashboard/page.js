@@ -433,7 +433,7 @@ export default function AdminDashboard() {
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🏢</div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">No agencies registered yet</h3>
-              <p className="text-gray-600">Click "Add New Agency" to register the first agency.</p>
+              <p className="text-gray-600">Click &quot;Add New Agency&quot; to register the first agency.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">

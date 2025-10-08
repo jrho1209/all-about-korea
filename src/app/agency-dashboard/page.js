@@ -611,7 +611,7 @@ export default function AgencyDashboardPage() {
               <div className="bg-white rounded-lg shadow-md p-8 text-center">
                 <div className="text-6xl mb-4">✅</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">No confirmed inquiries</h3>
-                <p className="text-gray-600">Once you confirm inquiries, they'll appear here.</p>
+                <p className="text-gray-600">Once you confirm inquiries, they&apos;ll appear here.</p>
               </div>
             ) : (
               <div className="space-y-4">

@@ -7,6 +7,7 @@ import "react-phone-input-2/lib/style.css";
 import emailValidator from "email-validator";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Signup() {
   const [phone, setPhone] = useState("");
@@ -289,7 +290,7 @@ export default function Signup() {
           Sign up with Google
         </button>
         <p className="text-gray-400 text-sm mt-2">
-          Already have an account? <a href="/login" className="text-blue-400 hover:underline">Log in</a>
+          Already have an account? <Link href="/login" className="text-blue-400 hover:underline">Log in</Link>
         </p>
       </section>
     </main>

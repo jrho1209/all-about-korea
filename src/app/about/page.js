@@ -1,4 +1,5 @@
 import PageHero from "../components/PageHero/PageHero";
+import Link from "next/link";
 
 export default function About() {
   return (
@@ -14,7 +15,7 @@ export default function About() {
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               A trusted platform connecting international travelers with verified local travel agencies in Daejeon. 
-              Experience safe and extraordinary journeys through Korea's science and technology hub.
+              Experience safe and extraordinary journeys through Korea&apos;s science and technology hub.
             </p>
           </div>
 
@@ -39,7 +40,7 @@ export default function About() {
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
               <p className="text-gray-600 leading-relaxed">
                 To become the leading travel platform for Daejeon, contributing to elevating 
-                the city's status as an international tourist destination.
+                the city&apos;s status as an international tourist destination.
               </p>
             </div>
 
@@ -174,7 +175,7 @@ export default function About() {
             Have More Questions?
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Feel free to contact us anytime. We're here to help you create amazing memories in Daejeon.
+            Feel free to contact us anytime. We&apos;re here to help you create amazing memories in Daejeon.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
@@ -183,12 +184,12 @@ export default function About() {
             >
               Contact Us
             </a>
-            <a 
+            <Link 
               href="/agencies" 
               className="bg-white text-red-600 border-2 border-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-50 transition-colors"
             >
               Browse Agencies
-            </a>
+            </Link>
           </div>
         </div>
       </section>

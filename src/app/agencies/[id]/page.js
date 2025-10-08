@@ -331,11 +331,11 @@ export default function AgencyDetailPage() {
             </div>
           ) : (
             <div className="text-center py-8 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Hello, I'm {agency.name}!</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Hello, I&apos;m {agency.name}!</h3>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                I'm passionate about sharing the beauty and culture of Korea with travelers from around the world. 
+                I&apos;m passionate about sharing the beauty and culture of Korea with travelers from around the world. 
                 With years of experience in tourism, I love creating personalized experiences that showcase 
-                Korea's hidden gems, delicious cuisine, and rich traditions. Let me help you discover 
+                Korea&apos;s hidden gems, delicious cuisine, and rich traditions. Let me help you discover 
                 the Korea that locals know and love!
               </p>
             </div>
@@ -485,7 +485,7 @@ export default function AgencyDetailPage() {
           {/* Gallery description */}
           <div className="mt-6 text-center">
             <p className="text-gray-600 text-sm">
-              ✨ These are some of the amazing places I've visited with my travelers! 
+              ✨ These are some of the amazing places I&apos;ve visited with my travelers! 
               Each photo tells a story of unforgettable Korean experiences.
             </p>
           </div>
