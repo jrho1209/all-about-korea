@@ -75,7 +75,15 @@ export default function AgenciesPage() {
               <div key={agency._id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden h-[480px] flex flex-col">
                 {/* Profile Header with Background */}
                 <div className="relative h-32 bg-gradient-to-br from-red-500 via-pink-500 to-orange-500 flex-shrink-0">
-                  <div className="absolute inset-0 bg-black bg-opacity-10"></div>
+                  {agency.backgroundImage ? (
+                    <img 
+                      src={agency.backgroundImage} 
+                      alt={`${agency.name} background`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-red-500 via-pink-500 to-orange-500"></div>
+                  )}
                 </div>
                 
                 {/* Profile Picture - Fixed Position */}

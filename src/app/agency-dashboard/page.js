@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { uploadTravelPhoto, uploadProfilePhoto, uploadBackgroundImage, formatFileSize } from '../../lib/cloudinary';
 
 export default function AgencyDashboardPage() {
   const { data: session } = useSession();
@@ -12,6 +13,13 @@ export default function AgencyDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pending');
   const [calendarDate, setCalendarDate] = useState(new Date()); // Calendar navigation state
+  const [aboutMe, setAboutMe] = useState(''); // About Me content
+  const [aboutMeLoading, setAboutMeLoading] = useState(false); // About Me save state
+  
+  // Firebase upload states
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState([]);
+  const [agencyData, setAgencyData] = useState(null);
 
   // Calendar setup
   const localizer = momentLocalizer(moment);
@@ -77,10 +85,170 @@ export default function AgencyDashboardPage() {
         const inquiriesData = await inquiriesRes.json();
         setInquiries(inquiriesData);
       }
+
+      // Fetch agency profile information
+      const agencyRes = await fetch('/api/agency/profile');
+      if (agencyRes.ok) {
+        const agencyData = await agencyRes.json();
+        setAboutMe(agencyData.aboutMe || '');
+        setAgencyData(agencyData);
+      }
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // 여행 사진 업로드 함수
+  const handleTravelPhotosUpload = async (files) => {
+    if (!agencyData?._id) {
+      alert('Agency information not loaded. Please refresh the page.');
+      return;
+    }
+
+    setUploadingPhotos(true);
+    const uploadedUrls = [];
+    const progressArray = Array(files.length).fill(0);
+    setUploadProgress(progressArray);
+
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // 진행률 업데이트
+        progressArray[i] = 50;
+        setUploadProgress([...progressArray]);
+        
+        const url = await uploadTravelPhoto(file, agencyData._id);
+        uploadedUrls.push(url);
+        
+        // 완료 표시
+        progressArray[i] = 100;
+        setUploadProgress([...progressArray]);
+      }
+
+      // 기존 사진들과 새 사진들 합치기
+      const currentPhotos = agencyData.travelPhotos || [];
+      const updatedPhotos = [...currentPhotos, ...uploadedUrls];
+
+      // API 업데이트
+      const res = await fetch('/api/agency/profile', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ travelPhotos: updatedPhotos }),
+      });
+
+      if (res.ok) {
+        const result = await res.json();
+        alert(`${files.length}개의 사진이 성공적으로 업로드되었습니다!`);
+        // 데이터 새로고침
+        await fetchDashboardData();
+      } else {
+        const errorResult = await res.json();
+        alert('사진 정보 저장에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert(`업로드 실패: ${error.message}`);
+    } finally {
+      setUploadingPhotos(false);
+      setUploadProgress([]);
+    }
+  };
+
+  // 프로필 이미지 업로드 함수
+  const handleProfileImageUpload = async (file) => {
+    if (!agencyData?._id) {
+      alert('Agency information not loaded. Please refresh the page.');
+      return;
+    }
+
+    try {
+      const url = await uploadProfilePhoto(file, agencyData._id);
+      
+      // API 업데이트
+      const res = await fetch('/api/agency/profile', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: url }),
+      });
+
+      if (res.ok) {
+        alert('프로필 이미지가 성공적으로 업데이트되었습니다!');
+        await fetchDashboardData();
+      } else {
+        alert('프로필 이미지 저장에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Profile upload error:', error);
+      alert(`업로드 실패: ${error.message}`);
+    }
+  };
+
+  // 배경 이미지 업로드 함수
+  const handleBackgroundImageUpload = async (file) => {
+    if (!agencyData?._id) {
+      alert('Agency information not loaded. Please refresh the page.');
+      return;
+    }
+
+    try {
+      // 파일 크기 체크 (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('파일 크기는 5MB 이하여야 합니다.');
+        return;
+      }
+
+      // 배경 이미지 전용 업로드 함수 사용
+      const url = await uploadBackgroundImage(file, agencyData._id);
+      
+      // API 업데이트
+      const res = await fetch('/api/agency/profile', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ backgroundImage: url }),
+      });
+
+      if (res.ok) {
+        alert('배경 이미지가 성공적으로 업데이트되었습니다!');
+        await fetchDashboardData();
+      } else {
+        alert('배경 이미지 저장에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Background image upload error:', error);
+      alert(`배경 이미지 업로드 실패: ${error.message}`);
+    }
+  };
+
+  const handleUpdateAboutMe = async () => {
+    setAboutMeLoading(true);
+    try {
+      const res = await fetch('/api/agency/profile', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ aboutMe }),
+      });
+
+      if (res.ok) {
+        alert('About Me updated successfully!');
+      } else {
+        alert('Failed to update About Me.');
+      }
+    } catch (error) {
+      console.error('Error updating About Me:', error);
+      alert('An error occurred while updating About Me.');
+    } finally {
+      setAboutMeLoading(false);
     }
   };
 
@@ -196,13 +364,31 @@ export default function AgencyDashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Agency Dashboard
-          </h1>
-          <p className="text-gray-600">
-            Welcome, {session.user.name || session.user.email}!
-          </p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Agency Dashboard
+            </h1>
+            <p className="text-gray-600">
+              Welcome, {session.user.name || session.user.email}!
+            </p>
+          </div>
+          
+          {/* View Profile Button */}
+          {agencyData?._id && (
+            <a
+              href={`/agencies/${agencyData._id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              View My Profile
+            </a>
+          )}
         </div>
 
         {/* Tab Navigation */}
@@ -248,6 +434,16 @@ export default function AgencyDashboardPage() {
                 }`}
               >
                 My Schedule
+              </button>
+              <button
+                onClick={() => setActiveTab('profile')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'profile'
+                    ? 'border-red-500 text-red-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                My Profile
               </button>
             </nav>
           </div>
@@ -791,6 +987,280 @@ export default function AgencyDashboardPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Profile Tab */}
+        {activeTab === 'profile' && (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-gray-900">My Profile</h2>
+            
+            {/* About Me Section */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">About Me</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Tell potential travelers about yourself! Share your experience, interests, and what makes you special as a travel guide. 
+                This will appear on your public profile page. (3-4 lines recommended)
+              </p>
+              
+              <div className="space-y-4">
+                <textarea
+                  value={aboutMe}
+                  onChange={(e) => setAboutMe(e.target.value)}
+                  placeholder="Write about yourself here... For example: Hi! I'm passionate about sharing Korea's hidden gems with travelers. With 5 years of experience as a local guide, I love showing visitors our beautiful temples, delicious street food, and vibrant culture. Let me help you create unforgettable memories in Korea!"
+                  rows="6"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+                  maxLength="500"
+                />
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-500">
+                    {aboutMe.length}/500 characters
+                  </span>
+                  
+                  <button
+                    onClick={handleUpdateAboutMe}
+                    disabled={aboutMeLoading}
+                    className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                      aboutMeLoading
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        : 'bg-red-600 text-white hover:bg-red-700'
+                    }`}
+                  >
+                    {aboutMeLoading ? 'Saving...' : 'Save About Me'}
+                  </button>
+                </div>
+              </div>
+              
+              {/* Preview */}
+              {aboutMe && (
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                  <h4 className="text-sm font-medium text-gray-900 mb-2">Preview:</h4>
+                  <p className="text-gray-700 whitespace-pre-line">{aboutMe}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Profile Image Upload */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Profile Image</h3>
+              
+              {/* Current Profile Image */}
+              <div className="flex items-center space-x-6 mb-6">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-full border-4 border-gray-200 overflow-hidden bg-gray-100 flex items-center justify-center">
+                    {agencyData?.image ? (
+                      <img 
+                        src={agencyData.image} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-3xl text-gray-400">🏢</div>
+                    )}
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-medium text-gray-900">{agencyData?.name || 'Agency Name'}</h4>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Upload a professional profile photo that represents your agency
+                  </p>
+                </div>
+              </div>
+
+              {/* Upload Input */}
+              <div className="space-y-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      handleProfileImageUpload(file);
+                    }
+                  }}
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-red-700 hover:file:bg-red-100"
+                />
+                <p className="text-xs text-gray-500">
+                  📸 Recommended: Square image, max 2MB, JPG/PNG format
+                </p>
+              </div>
+            </div>
+
+            {/* Background Image Upload */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Background Image</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Choose a stunning background image for your agency card. This will be the first thing travelers see! 
+                Consider using beautiful Korean landscapes, cultural sites, or food photos.
+              </p>
+              
+              {/* Current Background Image */}
+              <div className="mb-6">
+                <div className="relative w-full h-48 rounded-lg overflow-hidden bg-gradient-to-br from-red-500 via-pink-500 to-orange-500">
+                  {agencyData?.backgroundImage ? (
+                    <img 
+                      src={agencyData.backgroundImage} 
+                      alt="Background" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="text-center text-white">
+                        <div className="text-4xl mb-2">🏔️</div>
+                        <p className="text-sm font-medium">No background image</p>
+                        <p className="text-xs opacity-75">Upload one to make your profile stand out!</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Preview Profile on Background */}
+                  <div className="absolute bottom-4 left-4 flex items-center space-x-3">
+                    <div className="w-12 h-12 rounded-full border-2 border-white overflow-hidden bg-white">
+                      {agencyData?.image ? (
+                        <img 
+                          src={agencyData.image} 
+                          alt="Profile" 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400 text-lg">🏢</div>
+                      )}
+                    </div>
+                    <div className="text-white">
+                      <h4 className="font-medium text-sm">{agencyData?.name || 'Agency Name'}</h4>
+                      <p className="text-xs opacity-90">{agencyData?.tagline || 'Your tagline here'}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Upload Input */}
+              <div className="space-y-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      handleBackgroundImageUpload(file);
+                    }
+                  }}
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+                <p className="text-xs text-gray-500">
+                  🌄 Recommended: Wide landscape image (16:9 ratio), max 5MB, JPG/PNG format
+                </p>
+                
+                {/* Inspiration */}
+                <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                  <h5 className="text-sm font-medium text-blue-900 mb-2">💡 Background Image Ideas:</h5>
+                  <div className="text-xs text-blue-800 space-y-1">
+                    <p>🏯 <strong>Cultural:</strong> Gyeongbokgung Palace, Bukchon Hanok Village, Traditional temples</p>
+                    <p>🌸 <strong>Nature:</strong> Cherry blossoms, Jeju Island, Han River, Seoraksan National Park</p>
+                    <p>🍜 <strong>Food:</strong> Korean BBQ, Colorful banchan, Traditional market scenes</p>
+                    <p>🏙️ <strong>Modern:</strong> Seoul skyline, Gangnam district, Busan beaches</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Travel Photos Upload */}
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Travel Photo Gallery</h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Upload photos from your travel experiences to showcase your expertise and attract more customers.
+                These photos will appear in your public profile gallery.
+              </p>
+
+              {/* Current Photos Count */}
+              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium text-blue-900">
+                      Current Photos: {agencyData?.travelPhotos?.length || 0}
+                    </h4>
+                    <p className="text-sm text-blue-700 mt-1">
+                      Upload high-quality photos of Korean attractions, food, and cultural experiences
+                    </p>
+                  </div>
+                  <div className="text-3xl">📷</div>
+                </div>
+              </div>
+
+              {/* Upload Section */}
+              <div className="space-y-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files);
+                    if (files.length > 0) {
+                      if (files.length > 10) {
+                        alert('한 번에 최대 10개의 파일만 업로드할 수 있습니다.');
+                        return;
+                      }
+                      handleTravelPhotosUpload(files);
+                    }
+                  }}
+                  disabled={uploadingPhotos}
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100 disabled:opacity-50"
+                />
+
+                {/* Upload Progress */}
+                {uploadingPhotos && (
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-gray-700">업로드 중...</p>
+                    {uploadProgress.map((progress, index) => (
+                      <div key={index} className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${progress}%` }}
+                        ></div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-500">
+                  <div>
+                    ✅ Multiple files supported (max 10 at once)<br/>
+                    ✅ Formats: JPG, PNG, WEBP<br/>
+                    ✅ Max size: 5MB per file
+                  </div>
+                  <div>
+                    💡 Tips:<br/>
+                    • High-resolution photos work best<br/>
+                    • Showcase diverse Korean experiences<br/>
+                    • Include both landmarks and local culture
+                  </div>
+                </div>
+              </div>
+
+              {/* Recent Photos Preview */}
+              {agencyData?.travelPhotos && agencyData.travelPhotos.length > 0 && (
+                <div className="mt-6">
+                  <h4 className="font-medium text-gray-900 mb-3">Recent Photos</h4>
+                  <div className="grid grid-cols-4 gap-2">
+                    {agencyData.travelPhotos.slice(-8).map((photo, index) => (
+                      <div key={index} className="aspect-square rounded-lg overflow-hidden bg-gray-100">
+                        <img 
+                          src={photo} 
+                          alt={`Travel photo ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  {agencyData.travelPhotos.length > 8 && (
+                    <p className="text-sm text-gray-500 mt-2 text-center">
+                      +{agencyData.travelPhotos.length - 8} more photos in your gallery
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -18,9 +18,11 @@ export default function AdminDashboard() {
     location: '',
     specialties: '',
     description: '',
+    aboutMe: '', // Add aboutMe field
     tagline: '',
     rating: '',
     image: '',
+    travelPhotos: '', // Add travel photos field (comma-separated URLs)
     bio: {
       gender: '',
       age: '',
@@ -84,6 +86,7 @@ export default function AdminDashboard() {
         body: JSON.stringify({
           ...formData,
           specialties: formData.specialties.split(',').map(s => s.trim()).filter(s => s),
+          travelPhotos: formData.travelPhotos.split(',').map(url => url.trim()).filter(url => url),
           rating: parseFloat(formData.rating) || 0,
         }),
       });
@@ -98,9 +101,11 @@ export default function AdminDashboard() {
           location: '',
           specialties: '',
           description: '',
+          aboutMe: '',
           tagline: '',
           rating: '',
           image: '',
+          travelPhotos: '',
           bio: {
             gender: '',
             age: '',
@@ -272,6 +277,23 @@ export default function AdminDashboard() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Travel Photos (URLs)
+                  </label>
+                  <textarea
+                    name="travelPhotos"
+                    value={formData.travelPhotos}
+                    onChange={handleInputChange}
+                    placeholder="Enter photo URLs separated by commas (e.g., https://example.com/photo1.jpg, https://example.com/photo2.jpg)"
+                    rows="3"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    💡 Tip: Add up to 16 travel photos that showcase your travel experiences and expertise
+                  </p>
+                </div>
               </div>
 
               <div>
@@ -312,6 +334,24 @@ export default function AdminDashboard() {
                   rows="4"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 ></textarea>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  About Me
+                </label>
+                <textarea
+                  name="aboutMe"
+                  value={formData.aboutMe}
+                  onChange={handleInputChange}
+                  placeholder="Write a personal introduction that will appear on the agency's profile page..."
+                  rows="4"
+                  maxLength="500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                ></textarea>
+                <p className="text-xs text-gray-500 mt-1">
+                  💡 Personal introduction for the profile page (3-4 lines recommended, max 500 characters)
+                </p>
               </div>
 
               {/* Bio Section */}

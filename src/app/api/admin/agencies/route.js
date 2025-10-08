@@ -30,9 +30,11 @@ export async function POST(request) {
       location: body.location || '',
       specialties: body.specialties || [],
       description: body.description || '',
+      aboutMe: body.aboutMe || '', // Add aboutMe field
       tagline: body.tagline || '',
       rating: body.rating || 0,
       image: body.image || '',
+      travelPhotos: body.travelPhotos || [], // Add travel photos array
       bio: {
         gender: body.bio?.gender || '',
         age: body.bio?.age || '',
