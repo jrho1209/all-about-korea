@@ -24,11 +24,12 @@ export default function Navbar() {
           <div className="flex-shrink-0">
             <Link href="/" onClick={closeMenu}>
               <Image
-                src="/logo/logo.png"
+                src="/logo/logo-primary.png"
                 alt="Daejeon Travel Platform Logo"
                 width={120}
                 height={48}
                 className="h-12 w-auto hover:scale-105 transition-transform duration-200"
+                priority
               />
             </Link>
           </div>
