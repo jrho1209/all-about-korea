@@ -508,8 +508,18 @@ export default function AgencyDashboardPage() {
                       {/* Customer Message */}
                       <div className="mb-4">
                         <div className="flex items-start space-x-3">
-                          <div className="w-auto px-2 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-medium">
-                            Customer
+                          <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                            {inquiry.userImage ? (
+                              <img 
+                                src={inquiry.userImage} 
+                                alt="Customer profile" 
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-xs font-semibold text-gray-600">
+                                {inquiry.userName?.charAt(0) || inquiry.userEmail?.charAt(0) || 'C'}
+                              </span>
+                            )}
                           </div>
                           <div className="flex-1">
                             <div className="bg-gray-100 rounded-lg p-3">
@@ -527,15 +537,25 @@ export default function AgencyDashboardPage() {
                         <div key={index} className="mb-4">
                           <div className="flex items-start space-x-3 justify-end">
                             <div className="flex-1 text-right">
-                              <div className="bg-red-100 rounded-lg p-3 inline-block max-w-md">
-                                <p className="text-gray-900">{response.message}</p>
+                              <div className="bg-[#5C7F9A] text-white rounded-lg p-3 inline-block max-w-md">
+                                <p>{response.message}</p>
                               </div>
                               <p className="text-xs text-gray-500 mt-1">
                                 You • {formatDateTime(response.createdAt)}
                               </p>
                             </div>
-                            <div className="w-auto px-2 h-8 bg-red-100 rounded-full flex items-center justify-center text-sm font-medium">
-                              You
+                            <div className="w-8 h-8 rounded-full overflow-hidden bg-[#5C7F9A] flex items-center justify-center">
+                              {agencyData?.image || session?.user?.image ? (
+                                <img 
+                                  src={agencyData?.image || session.user.image} 
+                                  alt="Your profile" 
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <span className="text-xs font-semibold text-white">
+                                  {agencyData?.name?.charAt(0) || session?.user?.name?.charAt(0) || session?.user?.email?.charAt(0) || 'A'}
+                                </span>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -553,8 +573,18 @@ export default function AgencyDashboardPage() {
                                 You • {inquiry.respondedAt ? formatDateTime(inquiry.respondedAt) : 'Just now'}
                               </p>
                             </div>
-                            <div className="w-auto px-2 h-8 bg-red-100 rounded-full flex items-center justify-center text-sm font-medium">
-                              You
+                            <div className="w-8 h-8 rounded-full overflow-hidden bg-[#5C7F9A] flex items-center justify-center">
+                              {agencyData?.image || session?.user?.image ? (
+                                <img 
+                                  src={agencyData?.image || session.user.image} 
+                                  alt="Your profile" 
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <span className="text-xs font-semibold text-white">
+                                  {agencyData?.name?.charAt(0) || session?.user?.name?.charAt(0) || session?.user?.email?.charAt(0) || 'A'}
+                                </span>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -585,7 +615,7 @@ export default function AgencyDashboardPage() {
                               <div className="flex justify-end mt-2">
                                 <button
                                   type="submit"
-                                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
+                                  className="bg-[#5C7F9A] text-white px-4 py-2 rounded-lg hover:bg-[#4A6B82] transition-colors text-sm font-medium"
                                 >
                                   Send Reply
                                 </button>
@@ -654,8 +684,18 @@ export default function AgencyDashboardPage() {
                       <span className="text-sm font-medium text-gray-500">Original Message:</span>
                       <div className="mt-2 p-3 bg-gray-100 rounded-lg">
                         <div className="flex items-start space-x-3">
-                          <div className="w-auto px-2 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-medium">
-                            Customer
+                          <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                            {inquiry.userImage ? (
+                              <img 
+                                src={inquiry.userImage} 
+                                alt="Customer profile" 
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-xs font-semibold text-gray-600">
+                                {inquiry.userName?.charAt(0) || inquiry.userEmail?.charAt(0) || 'C'}
+                              </span>
+                            )}
                           </div>
                           <div className="flex-1">
                             <p className="text-gray-900">{inquiry.message}</p>
@@ -676,8 +716,18 @@ export default function AgencyDashboardPage() {
                           {inquiry.responses && inquiry.responses.length > 0 ? (
                             inquiry.responses.map((response, index) => (
                               <div key={index} className="flex items-start space-x-3">
-                                <div className="w-auto px-2 h-8 bg-green-100 rounded-full flex items-center justify-center text-sm font-medium">
-                                  You
+                                <div className="w-8 h-8 rounded-full overflow-hidden bg-[#5C7F9A] flex items-center justify-center">
+                                  {agencyData?.image || session?.user?.image ? (
+                                    <img 
+                                      src={agencyData?.image || session.user.image} 
+                                      alt="Your profile" 
+                                      className="w-full h-full object-cover"
+                                    />
+                                  ) : (
+                                    <span className="text-xs font-semibold text-white">
+                                      {agencyData?.name?.charAt(0) || session?.user?.name?.charAt(0) || session?.user?.email?.charAt(0) || 'A'}
+                                    </span>
+                                  )}
                                 </div>
                                 <div className="flex-1">
                                   <div className="bg-green-50 rounded-lg p-3 border-l-4 border-green-400">
@@ -693,8 +743,18 @@ export default function AgencyDashboardPage() {
                             /* Show legacy single response if no responses array */
                             inquiry.response && (
                               <div className="flex items-start space-x-3">
-                                <div className="w-auto px-2 h-8 bg-green-100 rounded-full flex items-center justify-center text-sm font-medium">
-                                  You
+                                <div className="w-8 h-8 rounded-full overflow-hidden bg-[#5C7F9A] flex items-center justify-center">
+                                  {agencyData?.image || session?.user?.image ? (
+                                    <img 
+                                      src={agencyData?.image || session.user.image} 
+                                      alt="Your profile" 
+                                      className="w-full h-full object-cover"
+                                    />
+                                  ) : (
+                                    <span className="text-xs font-semibold text-white">
+                                      {agencyData?.name?.charAt(0) || session?.user?.name?.charAt(0) || session?.user?.email?.charAt(0) || 'A'}
+                                    </span>
+                                  )}
                                 </div>
                                 <div className="flex-1">
                                   <div className="bg-green-50 rounded-lg p-3 border-l-4 border-green-400">
@@ -758,8 +818,18 @@ export default function AgencyDashboardPage() {
                       {/* Customer Message */}
                       <div className="mb-4">
                         <div className="flex items-start space-x-3">
-                          <div className="w-auto px-2 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-medium">
-                            Customer
+                          <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                            {inquiry.userImage ? (
+                              <img 
+                                src={inquiry.userImage} 
+                                alt="Customer profile" 
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-xs font-semibold text-gray-600">
+                                {inquiry.userName?.charAt(0) || inquiry.userEmail?.charAt(0) || 'C'}
+                              </span>
+                            )}
                           </div>
                           <div className="flex-1">
                             <div className="bg-gray-100 rounded-lg p-3">
@@ -777,8 +847,18 @@ export default function AgencyDashboardPage() {
                         <div className="space-y-3">
                           {inquiry.responses.map((response, index) => (
                             <div key={index} className="flex items-start space-x-3">
-                              <div className="w-auto px-2 h-8 bg-red-100 rounded-full flex items-center justify-center text-sm font-medium">
-                                You
+                              <div className="w-8 h-8 rounded-full overflow-hidden bg-[#5C7F9A] flex items-center justify-center">
+                                {agencyData?.image || session?.user?.image ? (
+                                  <img 
+                                    src={agencyData?.image || session.user.image} 
+                                    alt="Your profile" 
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  <span className="text-xs font-semibold text-white">
+                                    {agencyData?.name?.charAt(0) || session?.user?.name?.charAt(0) || session?.user?.email?.charAt(0) || 'A'}
+                                  </span>
+                                )}
                               </div>
                               <div className="flex-1">
                                 <div className="bg-red-50 rounded-lg p-3">

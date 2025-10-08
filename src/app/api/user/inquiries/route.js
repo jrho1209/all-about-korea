@@ -32,12 +32,14 @@ export async function GET() {
           
           return {
             ...inquiry,
-            agencyName: agency?.name || 'Unknown Agency'
+            agencyName: agency?.name || 'Unknown Agency',
+            agencyImage: agency?.image || null
           };
         } catch (error) {
           return {
             ...inquiry,
-            agencyName: 'Unknown Agency'
+            agencyName: 'Unknown Agency',
+            agencyImage: null
           };
         }
       })

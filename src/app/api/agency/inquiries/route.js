@@ -32,8 +32,48 @@ export async function GET() {
       .find({ agencyId: agency._id.toString() })
       .sort({ createdAt: -1 })
       .toArray();
-    
-    return NextResponse.json(inquiries);
+
+    // Enrich inquiries with user profile information
+    const enrichedInquiries = await Promise.all(
+      inquiries.map(async (inquiry) => {
+        try {
+          // First try to find user in users collection
+          const user = await db.collection('users')
+            .findOne({ email: inquiry.userEmail });
+          
+          let userImage = user?.image || null;
+          
+          // If no image in users collection, try to find in accounts collection
+          if (!userImage) {
+            const account = await db.collection('accounts')
+              .findOne({ 
+                provider: 'google',
+                $or: [
+                  { email: inquiry.userEmail },
+                  { providerAccountId: { $exists: true } }
+                ]
+              });
+            
+            if (account) {
+              // Get user by account userId
+              const accountUser = await db.collection('users')
+                .findOne({ _id: account.userId });
+              userImage = accountUser?.image || null;
+            }
+          }
+          
+          return {
+            ...inquiry,
+            userImage: userImage
+          };
+        } catch (error) {
+          console.error('Error fetching user info for inquiry:', error);
+          return inquiry;
+        }
+      })
+    );
+
+    return NextResponse.json(enrichedInquiries);
   } catch (error) {
     console.error('Error fetching inquiries:', error);
     return NextResponse.json(
