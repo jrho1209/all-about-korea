@@ -46,7 +46,7 @@ export default function UserDashboard() {
   
   // Color palette for different agencies/statuses
   const statusColors = {
-    'pending': '#FFCB05',
+    'pending': '#5C7F9A',
     'in-progress': '#5C7F9A', 
     'confirmed': '#10B981',
     'cancelled': '#EF4444'
@@ -104,7 +104,7 @@ export default function UserDashboard() {
       case 'in-progress':
         return '#5C7F9A';
       case 'pending':
-        return '#FFCB05';
+        return '#5C7F9A';
       case 'cancelled':
         return '#EF4444';
       default:
