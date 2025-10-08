@@ -50,12 +50,6 @@ export default function Navbar() {
             >
               Food
             </Link>
-            <Link 
-              href={session?.user ? "/travel" : "/login"}
-              className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
-            >
-              Travel
-            </Link>
             
             {session?.user ? (
               <div className="flex items-center space-x-4">
@@ -167,17 +161,6 @@ export default function Navbar() {
               Food
             </span>
           </Link>
-          <Link 
-            href={session?.user ? "/travel" : "/login"}
-            onClick={closeMenu}
-            className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
-          >
-            <span className="flex items-center">
-              <span className="mr-3">✈️</span>
-              Travel
-            </span>
-          </Link>
-          
           {/* Mobile User Section */}
           <div className="border-t border-gray-200 pt-4 mt-4">
             {session?.user ? (

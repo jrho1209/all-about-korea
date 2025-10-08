@@ -85,7 +85,7 @@ export default function PageHero({ customTitle, customSubtitle }) {
   const subtitle = customSubtitle || config.subtitle;
 
   return (
-    <section className={`relative min-h-[60vh] flex items-center justify-center bg-gradient-to-br ${config.bgGradient} text-white overflow-hidden`}>
+    <section className={`relative min-h-[40vh] flex items-center justify-center bg-gradient-to-br ${config.bgGradient} text-white overflow-hidden`}>
       {/* Floating Elements - 느린 회전과 떠오르는 효과 */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-20 w-64 h-64 bg-white/3 rounded-full blur-3xl animate-float-slow"></div>
@@ -98,10 +98,6 @@ export default function PageHero({ customTitle, customSubtitle }) {
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        {/* Emoji with hover scale */}
-        <div className="text-6xl md:text-7xl mb-6 hover:scale-110 transition-transform duration-300 cursor-pointer">
-          {config.emoji}
-        </div>
         
         {/* Title with stagger animation */}
         <h1 className={`text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent leading-tight animate-fade-in-up`}>
@@ -115,16 +111,6 @@ export default function PageHero({ customTitle, customSubtitle }) {
         
         {/* Animated Line */}
         <div className={`w-0 h-1 bg-gradient-to-r ${config.gradient} mx-auto mt-8 rounded-full animate-expand-line`}></div>
-      </div>
-
-      {/* Smooth scroll indicator - 완전 중앙 정렬 */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float-gentle">
-        <div className="flex flex-col items-center space-y-2">
-          <div className="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center items-start pt-2">
-            <div className="w-1 h-3 bg-white/60 rounded-full animate-scroll-indicator"></div>
-          </div>
-          <span className="text-xs text-white/50 font-light">Scroll</span>
-        </div>
       </div>
 
       <style jsx>{`
@@ -152,22 +138,12 @@ export default function PageHero({ customTitle, customSubtitle }) {
           0% { width: 0; }
           100% { width: 6rem; }
         }
-        @keyframes float-gentle {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(-10px); }
-        }
-        @keyframes scroll-indicator {
-          0% { opacity: 1; transform: translateY(0); }
-          100% { opacity: 0; transform: translateY(16px); }
-        }
         .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
         .animate-float-slower { animation: float-slower 12s ease-in-out infinite; }
         .animate-float-reverse { animation: float-reverse 10s ease-in-out infinite; }
         .animate-gradient-shift { animation: gradient-shift 6s ease-in-out infinite; }
         .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
         .animate-expand-line { animation: expand-line 1.2s ease-out 0.5s forwards; }
-        .animate-float-gentle { animation: float-gentle 3s ease-in-out infinite; }
-        .animate-scroll-indicator { animation: scroll-indicator 2s ease-in-out infinite; }
         .delay-300 { animation-delay: 0.3s; }
       `}</style>
     </section>
