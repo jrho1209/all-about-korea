@@ -2,102 +2,96 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white">
+    <footer 
+      className="text-white"
+      style={{
+        background: 'linear-gradient(to bottom, #000000 0%, #1a1a1a 100%)'
+      }}
+    >
       {/* Main Footer Content */}
       <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-4 gap-12">
           {/* Brand Section */}
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-black mb-4 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
-              K-Everything
+            <h3 className="text-2xl font-black mb-4" style={{color: '#B71C1C'}}>
+              All About Korea
             </h3>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Bridging Korean culture with global curiosity. 
-              Discover authentic stories, flavors, and experiences.
+            <p className="text-sm leading-relaxed mb-6" style={{color: '#8D6E63'}}>
+              Your perfect tour mate platform. Connect with local friends for authentic cultural exchange and unforgettable experiences in Daejeon.
             </p>
-            <div className="flex space-x-4">
-              <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-lg hover:bg-red-500 transition-colors cursor-pointer">
-                🇰🇷
-              </div>
-              <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-lg hover:bg-gray-700 transition-colors cursor-pointer">
-                🌍
-              </div>
-            </div>
           </div>
 
           {/* Navigation Links */}
           <div className="md:col-span-1">
-            <h4 className="text-lg font-bold mb-6 text-white">Explore</h4>
+            <h4 className="text-lg font-bold mb-6" style={{color: '#F8F4EC'}}>Explore</h4>
             <nav className="space-y-3">
-              <Link href="/about" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <Link href="/about" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
                 About
               </Link>
-              <Link href="/food" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <Link href="/agencies" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
+                Travel Agencies
+              </Link>
+              <Link href="/food" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
                 Korean Food
               </Link>
-              <Link href="/drama" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                K-Drama
+              <Link href="/signup" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
+                Join as Tour Mate
               </Link>
-              <Link href="/movies" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                K-Movies
-              </Link>
-              <Link href="/music" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                K-Music
-              </Link>
-              <Link href="/travel" className="block text-gray-400 hover:text-white transition-colors text-sm">
-                Travel
+              <Link href="/login" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
+                Login
               </Link>
             </nav>
           </div>
 
           {/* Categories */}
           <div className="md:col-span-1">
-            <h4 className="text-lg font-bold mb-6 text-white">Categories</h4>
+            <h4 className="text-lg font-bold mb-6" style={{color: '#F8F4EC'}}>Services</h4>
             <div className="space-y-3">
-              <div className="text-gray-400 text-sm flex items-center">
-                <span className="mr-2">🍜</span>
-                Local Restaurants
+              <div className="text-sm flex items-center" style={{color: '#8D6E63'}}>
+                <span className="mr-2">🤝</span>
+                Local Friend Matching
               </div>
-              <div className="text-gray-400 text-sm flex items-center">
-                <span className="mr-2">📺</span>
-                Drama Reviews
+              <div className="text-sm flex items-center" style={{color: '#8D6E63'}}>
+                <span className="mr-2">🌏</span>
+                Cultural Exchange
               </div>
-              <div className="text-gray-400 text-sm flex items-center">
-                <span className="mr-2">🎬</span>
-                Film Analysis
+              <div className="text-sm flex items-center" style={{color: '#8D6E63'}}>
+                <span className="mr-2">⭐</span>
+                Authentic Experiences
               </div>
-              <div className="text-gray-400 text-sm flex items-center">
-                <span className="mr-2">🎵</span>
-                Music Discovery
+              <div className="text-sm flex items-center" style={{color: '#8D6E63'}}>
+                <span className="mr-2">🗺️</span>
+                Hidden Gems Tours
               </div>
-              <div className="text-gray-400 text-sm flex items-center">
-                <span className="mr-2">✈️</span>
-                Travel Guides
+              <div className="text-sm flex items-center" style={{color: '#8D6E63'}}>
+                <span className="mr-2">🏛️</span>
+                Daejeon Adventures
               </div>
             </div>
           </div>
 
           {/* Contact Me Section */}
           <div className="md:col-span-1">
-            <h4 className="text-lg font-bold mb-6 text-white">Contact Me</h4>
+            <h4 className="text-lg font-bold mb-6" style={{color: '#F8F4EC'}}>Contact Us</h4>
             <div className="space-y-4">
-              <div className="text-gray-400 text-sm">
-                <span className="block font-semibold text-white mb-1">James Rho</span>
-                Korean-American Developer & Culture Enthusiast
+              <div className="text-sm" style={{color: '#8D6E63'}}>
+                <span className="block font-semibold mb-1" style={{color: '#F8F4EC'}}>All About Korea Team</span>
+                Your trusted tour mate platform in Daejeon
               </div>
               
               <div className="space-y-3">
                 <a 
-                  href="mailto:james@k-everything.com" 
-                  className="flex items-center text-gray-400 hover:text-white transition-colors text-sm group"
+                  href="mailto:hello@allaboutkorea.com" 
+                  className="flex items-center hover:opacity-80 transition-colors text-sm group"
+                  style={{color: '#8D6E63'}}
                 >
                   <span className="mr-3 text-lg group-hover:scale-110 transition-transform">📧</span>
-                  james@k-everything.com
+                  hello@allaboutkorea.com
                 </a>
                 
-                <div className="flex items-center text-gray-400 text-sm">
+                <div className="flex items-center text-sm" style={{color: '#8D6E63'}}>
                   <span className="mr-3 text-lg">🌏</span>
-                  Daejeon, South Korea & Denver, USA
+                  Daejeon, South Korea
                 </div>
               </div>
             </div>
@@ -106,21 +100,26 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
-        <div className="max-w-6xl mx-auto px-6 py-6">
+      <div 
+        className="py-6"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%)'
+        }}
+      >
+        <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-500 text-sm">
-              &copy; {new Date().getFullYear()} All About Korea by James Rho. All rights reserved.
+            <p className="text-sm" style={{color: '#8D6E63'}}>
+              &copy; {new Date().getFullYear()} All About Korea. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
-              <Link href="/privacy" className="text-gray-500 hover:text-gray-300 transition-colors">
+              <Link href="/privacy" className="hover:opacity-80 transition-colors" style={{color: '#8D6E63'}}>
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-gray-500 hover:text-gray-300 transition-colors">
+              <Link href="/terms" className="hover:opacity-80 transition-colors" style={{color: '#8D6E63'}}>
                 Terms of Service
               </Link>
-              <span className="text-gray-500">
-                Made with ❤️ for Korean Culture
+              <span style={{color: '#8D6E63'}}>
+                Made with ❤️ for Cultural Exchange
               </span>
             </div>
           </div>
