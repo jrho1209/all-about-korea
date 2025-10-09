@@ -1,27 +1,80 @@
+'use client';
+
 import { sanityClient } from "@/sanity/client";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import Image from "next/image";
 import PageHero from "../components/PageHero/PageHero";
+import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import LoginRequired from "../components/LoginRequired/LoginRequired";
 
-export default async function Food() {
-  const posts = await sanityClient.fetch(
-    `*[_type == "post"]{
-      _id,
-      title,
-      "author": author->name,
-      "slug": slug.current,
-      body,
-      "imageUrl": mainImage.asset->url,
-      "imageAlt": mainImage.alt
-    }`,
-    {},
-    { cache: "no-store" }
-  );
+export default function Food() {
+  const { data: session } = useSession();
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const data = await sanityClient.fetch(
+          `*[_type == "post"]{
+            _id,
+            title,
+            "author": author->name,
+            "slug": slug.current,
+            body,
+            "imageUrl": mainImage.asset->url,
+            "imageAlt": mainImage.alt
+          }`,
+          {},
+          { cache: "no-store" }
+        );
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (session) {
+      fetchPosts();
+    }
+  }, [session]);
 
   const postsPerPage = 6; // 가로 2개 x 세로 3개
   const totalPages = Math.ceil(posts.length / postsPerPage);
   const currentPosts = posts.slice(0, postsPerPage); // 첫 페이지만 표시 (나중에 pagination 기능 추가 가능)
+
+  // 로그인이 필요한 경우
+  if (!session) {
+    return (
+      <LoginRequired 
+        description="Please log in to explore James Food Posts and discover authentic Korean cuisine and local restaurant recommendations."
+        backLink="/"
+        backText="← Back to Home"
+        benefits={[
+          "Access exclusive food posts and recipes",
+          "Discover local restaurant recommendations",
+          "Save your favorite food articles",
+          "Comment and share your experiences"
+        ]}
+      />
+    );
+  }
+
+  // 로딩 중
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto mb-4" style={{borderColor: '#B71C1C'}}></div>
+          <p className="text-gray-600">Loading delicious content...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

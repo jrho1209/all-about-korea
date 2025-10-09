@@ -1,27 +1,90 @@
+'use client';
+
 import { sanityClient } from "@/sanity/client";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import LoginRequired from "../../components/LoginRequired/LoginRequired";
 
-export default async function FoodPost({ params }) {
-  const { slug } = await params;  // ← await 추가
-  
-  const post = await sanityClient.fetch(
-    `*[_type == "post" && (slug.current == "${slug}" || _id == "${slug}")][0]{
-      _id,
-      title,
-      "author": author->name,
-      body,
-      publishedAt,
-      "slug": slug.current,
-      "imageUrl": mainImage.asset->url,
-      "imageAlt": mainImage.alt
-    }`,
-    {},
-    { cache: "no-store" }
-  );
+export default function FoodPost() {
+  const { data: session } = useSession();
+  const params = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  if (!post) {
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (!params.slug || !session) return;
+
+      try {
+        const data = await sanityClient.fetch(
+          `*[_type == "post" && (slug.current == "${params.slug}" || _id == "${params.slug}")][0]{
+            _id,
+            title,
+            "author": author->name,
+            body,
+            publishedAt,
+            "slug": slug.current,
+            "imageUrl": mainImage.asset->url,
+            "imageAlt": mainImage.alt
+          }`,
+          {},
+          { cache: "no-store" }
+        );
+
+        if (!data) {
+          setNotFound(true);
+        } else {
+          setPost(data);
+        }
+      } catch (error) {
+        console.error('Error fetching post:', error);
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (session) {
+      fetchPost();
+    }
+  }, [params.slug, session]);
+
+  // 로그인이 필요한 경우
+  if (!session) {
+    return (
+      <LoginRequired 
+        description="Please log in to read this food article and explore authentic Korean cuisine stories."
+        backLink="/food"
+        backText="← Back to Food Posts"
+        benefits={[
+          "Read full food articles",
+          "Access recipes and cooking tips",
+          "Save favorite posts",
+          "Comment and share experiences"
+        ]}
+      />
+    );
+  }
+
+  // 로딩 중
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto mb-4" style={{borderColor: '#B71C1C'}}></div>
+          <p className="text-gray-600">Loading article...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 포스트를 찾을 수 없는 경우
+  if (notFound || !post) {
     return (
       <main className="max-w-4xl mx-auto py-16 px-4 text-center">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Post Not Found</h1>

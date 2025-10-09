@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import LoginRequired from '../components/LoginRequired/LoginRequired';
 
 export default function AIPlanner() {
   const { data: session } = useSession();
@@ -240,59 +241,17 @@ export default function AIPlanner() {
   // 로그인이 필요한 경우 로그인 페이지 표시
   if (!session) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
-        <div className="max-w-md w-full mx-4">
-          <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-            <div className="mb-6">
-              <svg className="mx-auto h-12 w-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            
-            <h2 className="text-2xl font-bold mb-4" style={{color: '#B71C1C'}}>
-              Login Required
-            </h2>
-            
-            <p className="text-gray-600 mb-6">
-              Please log in to access the AI Travel Planner and create personalized travel plans for Daejeon.
-            </p>
-            
-            <div className="space-y-4">
-              <Link 
-                href="/login"
-                className="w-full block py-3 px-4 rounded-lg font-semibold text-white transition-colors hover:opacity-90"
-                style={{backgroundColor: '#B71C1C'}}
-              >
-                Login to Continue
-              </Link>
-              
-              <Link 
-                href="/signup"
-                className="w-full block py-3 px-4 rounded-lg font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
-              >
-                Create New Account
-              </Link>
-              
-              <Link 
-                href="/"
-                className="block text-sm text-gray-500 hover:text-gray-700 transition-colors"
-              >
-                ← Back to Home
-              </Link>
-            </div>
-            
-            <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold text-blue-800 mb-2">Why do I need to log in?</h3>
-              <ul className="text-sm text-blue-700 text-left space-y-1">
-                <li>• Save your personalized travel plans</li>
-                <li>• Access your plan history</li>
-                <li>• Get AI recommendations based on your preferences</li>
-                <li>• Export and share your plans</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <LoginRequired 
+        description="Please log in to access the AI Travel Planner and create personalized travel plans for Daejeon."
+        backLink="/"
+        backText="← Back to Home"
+        benefits={[
+          "Save your personalized travel plans",
+          "Access your plan history",
+          "Get AI recommendations based on your preferences",
+          "Export and share your plans"
+        ]}
+      />
     );
   }
 

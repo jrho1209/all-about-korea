@@ -43,7 +43,7 @@ export default function Navbar() {
               About
             </Link>
             <Link 
-              href={session?.user ? "/agencies" : "/login"}
+              href="/agencies"
               className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
             >
               Agencies
@@ -55,7 +55,7 @@ export default function Navbar() {
               AI Planner
             </Link>
             <Link 
-              href={session?.user ? "/food" : "/login"}
+              href="/food"
               className="text-gray-700 hover:text-red-600 transition-colors duration-200 font-medium"
             >
               Food
@@ -166,7 +166,7 @@ export default function Navbar() {
             About
           </Link>
           <Link 
-            href={session?.user ? "/agencies" : "/login"}
+            href="/agencies"
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
           >
@@ -180,14 +180,7 @@ export default function Navbar() {
             AI Planner
           </Link>
           <Link 
-            href={session?.user ? "/food" : "/login"}
-            onClick={closeMenu}
-            className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
-          >
-            Agencies
-          </Link>
-          <Link 
-            href={session?.user ? "/food" : "/login"}
+            href="/food"
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
           >
