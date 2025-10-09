@@ -87,11 +87,11 @@ export default function Hero() {
             Find Your Tour Mate
           </Link>
           <Link 
-            href="/about"
+            href="/ai-planner"
             className="text-white px-6 py-3 rounded-lg font-medium transition-colors hover:opacity-90 text-center"
             style={{backgroundColor: '#5C7F9A'}}
           >
-            Explore Tours
+            Plan with AI
           </Link>
         </div>
       </div>
