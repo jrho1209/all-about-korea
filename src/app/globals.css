@@ -104,7 +104,7 @@ body {
   
   .rbc-date-cell {
     padding: 2px !important;
-    min-height: 40px !important;
+    min-height: auto !important;
   }
   
   .rbc-date-cell > a {

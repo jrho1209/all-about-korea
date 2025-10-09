@@ -631,13 +631,13 @@ export default function UserDashboard() {
         {activeView === 'calendar' && (
           <div className="space-y-6">
             {/* Calendar */}
-            <div className="bg-white rounded-lg shadow-md p-3 md:p-6">
-              <div className="mb-3 md:mb-4">
+            <div className="bg-white rounded-lg shadow-md p-0 md:p-6">
+              <div className="mb-3 md:mb-4 px-3 md:px-0">
                 <h2 className="text-lg md:text-2xl font-bold mb-1 md:mb-2" style={{color: '#B71C1C'}}>My Travel Calendar</h2>
                 <p className="text-xs md:text-sm" style={{color: '#8D6E63'}}>View all your travel plans and bookings</p>
               </div>
               
-              <div className="h-96 md:h-[600px]">
+              <div className="h-96 md:h-[600px] px-3 md:px-0">
                 <Calendar
                   localizer={localizer}
                   events={inquiries
