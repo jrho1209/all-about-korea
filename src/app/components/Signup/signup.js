@@ -241,7 +241,7 @@ export default function Signup() {
         <button
           type="button"
           className="w-full py-3 rounded-lg bg-gray-700 text-white font-bold flex items-center justify-center gap-2 mb-4 hover:bg-gray-600 transition"
-          onClick={() => signIn("google")}
+          onClick={() => signIn("google", { callbackUrl: "/" })}
         >
           <svg width="20" height="20" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.73 1.22 9.24 3.22l6.93-6.93C35.61 2.36 30.13 0 24 0 14.61 0 6.27 0 2.44 14.09l8.51 6.62C13.13 14.13 18.13 9.5 24 9.5z"/><path fill="#34A853" d="M46.09 24.59c0-1.64-.15-3.22-.43-4.75H24v9.01h12.43c-.54 2.91-2.17 5.38-4.63 7.04l7.19 5.59C43.73 37.13 46.09 31.31 46.09 24.59z"/><path fill="#FBBC05" d="M10.95 28.71c-.48-1.44-.76-2.97-.76-4.71s.28-3.27.76-4.71l-8.51-6.62C1.09 16.87 0 20.29 0 24c0 3.71 1.09 7.13 2.44 10.33l8.51 6.62z"/><path fill="#EA4335" d="M24 48c6.13 0 11.61-2.36 15.93-6.45l-7.19-5.59c-2.01 1.35-4.59 2.15-7.74 2.15-5.87 0-10.87-4.63-12.95-10.91l-8.51 6.62C6.27 42.26 14.61 48 24 48z"/></g></svg>
           Sign up with Google
