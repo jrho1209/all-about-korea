@@ -13,7 +13,9 @@ export default function UserDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [inquiries, setInquiries] = useState([]);
+  const [savedTravelPlans, setSavedTravelPlans] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [plansLoading, setPlansLoading] = useState(true);
   const [activeView, setActiveView] = useState('dashboard');
   const [activeInquiryTab, setActiveInquiryTab] = useState('in-progress'); // 'in-progress', 'confirmed', 'cancelled'
   const [replyMessages, setReplyMessages] = useState({}); // Store reply messages for each inquiry
@@ -67,6 +69,7 @@ export default function UserDashboard() {
     }
 
     fetchInquiries();
+    fetchSavedTravelPlans();
   }, [session, status, router]);
 
   const fetchInquiries = async () => {
@@ -80,6 +83,49 @@ export default function UserDashboard() {
       console.error('Error fetching inquiries:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchSavedTravelPlans = async () => {
+    try {
+      setPlansLoading(true);
+      
+      const response = await fetch('/api/travel-plans');
+      
+      if (response.ok) {
+        const data = await response.json();
+        setSavedTravelPlans(data);
+      } else {
+        setSavedTravelPlans([]);
+      }
+    } catch (error) {
+      console.error('Error fetching saved travel plans:', error);
+      setSavedTravelPlans([]);
+    } finally {
+      setPlansLoading(false);
+    }
+  };
+
+  const deleteTravelPlan = async (planId) => {
+    if (!confirm('Are you sure you want to delete this travel plan?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/travel-plans?id=${planId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        // 성공적으로 삭제되면 목록에서 제거
+        setSavedTravelPlans(prev => prev.filter(plan => plan._id !== planId));
+      } else {
+        const result = await response.json();
+        alert('Failed to delete travel plan: ' + (result.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error deleting travel plan:', error);
+      alert('Failed to delete travel plan. Please try again.');
     }
   };
 
@@ -247,6 +293,20 @@ export default function UserDashboard() {
                 }}
               >
                 My Travel Calendar
+              </button>
+              <button
+                onClick={() => setActiveView('saved-plans')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeView === 'saved-plans'
+                    ? 'text-white'
+                    : 'border-transparent hover:border-gray-300'
+                }`}
+                style={{
+                  borderBottomColor: activeView === 'saved-plans' ? '#B71C1C' : 'transparent',
+                  color: activeView === 'saved-plans' ? '#B71C1C' : '#8D6E63'
+                }}
+              >
+                Saved Plans
               </button>
             </nav>
           </div>
@@ -815,6 +875,142 @@ export default function UserDashboard() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Saved Plans View */}
+        {activeView === 'saved-plans' && (
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold mb-2" style={{color: '#B71C1C'}}>My Saved Travel Plans</h2>
+              <p className="text-sm md:text-base" style={{color: '#8D6E63'}}>
+                AI-generated travel plans saved for your reference
+              </p>
+            </div>
+
+            {/* Saved Plans Content */}
+            {plansLoading ? (
+              <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                <div className="text-gray-400 text-6xl mb-4">⏳</div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Loading Saved Plans...</h3>
+                <p className="text-gray-600">Please wait while we fetch your travel plans.</p>
+              </div>
+            ) : savedTravelPlans.length === 0 ? (
+              <div className="bg-white rounded-lg shadow-md p-8 text-center">
+                <div className="text-gray-400 text-8xl mb-6">🗺️</div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">No Saved Travel Plans</h3>
+                <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                  Create personalized AI travel plans and save them here for easy access anytime.
+                </p>
+                <Link 
+                  href="/ai-planner"
+                  className="inline-block px-6 py-3 rounded-lg text-white font-medium transition-colors hover:opacity-90"
+                  style={{backgroundColor: '#B71C1C'}}
+                >
+                  Create Your First AI Travel Plan
+                </Link>
+              </div>
+            ) : (
+              <div className="grid gap-6">
+                {savedTravelPlans.map((plan) => (
+                  <div key={plan._id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                    {/* Plan Header */}
+                    <div className="border-b border-gray-200 p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.title}</h3>
+                          <p className="text-gray-600 mb-4">{plan.overview}</p>
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                            <div className="flex items-center space-x-1">
+                              <span>⏱️</span>
+                              <span>Duration: {plan.formData.duration === 'custom' ? `${plan.formData.customDuration} days` : plan.formData.duration}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <span>👥</span>
+                              <span>Group: {plan.formData.groupSize}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <span>💰</span>
+                              <span>Budget: ${plan.formData.totalBudget}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <span>📅</span>
+                              <span>Saved: {formatDate(plan.savedAt)}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex space-x-2 ml-4">
+                          <button 
+                            className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                          >
+                            Edit
+                          </button>
+                          <button 
+                            className="px-4 py-2 text-sm text-white rounded-lg transition-colors hover:opacity-90"
+                            style={{backgroundColor: '#B71C1C'}}
+                          >
+                            View Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Plan Preview */}
+                    <div className="p-6">
+                      <h4 className="font-bold text-gray-900 mb-3">Itinerary Preview</h4>
+                      <div className="space-y-3">
+                        {plan.itinerary.slice(0, 2).map((day, dayIndex) => (
+                          <div key={dayIndex} className="border border-gray-200 rounded-lg p-4">
+                            <h5 className="font-medium text-gray-900 mb-2">Day {day.day}: {day.theme}</h5>
+                            <div className="space-y-1">
+                              {day.activities.slice(0, 2).map((activity, actIndex) => (
+                                <div key={actIndex} className="text-sm text-gray-600 flex items-start space-x-2">
+                                  <span className="font-medium text-blue-600 min-w-0 w-12">{activity.time}</span>
+                                  <span className="font-medium">{activity.place}</span>
+                                  <span>- {activity.description}</span>
+                                </div>
+                              ))}
+                              {day.activities.length > 2 && (
+                                <div className="text-sm text-gray-500 italic">
+                                  + {day.activities.length - 2} more activities...
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                        {plan.itinerary.length > 2 && (
+                          <div className="text-center text-sm text-gray-500 italic border border-gray-200 rounded-lg p-3">
+                            + {plan.itinerary.length - 2} more days...
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Quick Actions */}
+                    <div className="border-t border-gray-200 p-4 bg-gray-50">
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex space-x-4">
+                          <span className="text-gray-600">Interests: {plan.formData.interests.slice(0, 2).join(', ')}</span>
+                          {plan.formData.interests.length > 2 && (
+                            <span className="text-gray-500">+{plan.formData.interests.length - 2} more</span>
+                          )}
+                        </div>
+                        <div className="flex space-x-2">
+                          <button 
+                            onClick={() => deleteTravelPlan(plan._id)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            Delete
+                          </button>
+                          <button className="text-blue-600 hover:text-blue-800">Export</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
