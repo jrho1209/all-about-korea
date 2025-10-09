@@ -256,63 +256,63 @@ export default function UserDashboard() {
         {activeView === 'dashboard' && (
           <>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #B71C1C'}}>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
-                      <span className="text-sm font-semibold" style={{color: '#B71C1C'}}>ALL</span>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-8">
+              <div className="bg-white rounded-lg shadow-sm p-3 md:p-6" style={{borderLeft: '4px solid #B71C1C'}}>
+                <div className="flex flex-col md:flex-row md:items-center">
+                  <div className="flex-shrink-0 mb-2 md:mb-0 hidden md:block">
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-xs md:text-sm font-semibold" style={{color: '#B71C1C'}}>ALL</span>
                     </div>
                   </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>Total Inquiries</h3>
-                    <p className="text-3xl font-bold" style={{color: '#B71C1C'}}>{inquiries.length}</p>
+                  <div className="md:ml-4">
+                    <h3 className="text-sm md:text-lg font-medium" style={{color: '#2E2E2E'}}>Total</h3>
+                    <p className="text-xl md:text-3xl font-bold" style={{color: '#B71C1C'}}>{inquiries.length}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #5C7F9A'}}>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
-                      <span className="text-sm font-semibold" style={{color: '#5C7F9A'}}>PROG</span>
+              <div className="bg-white rounded-lg shadow-sm p-3 md:p-6" style={{borderLeft: '4px solid #5C7F9A'}}>
+                <div className="flex flex-col md:flex-row md:items-center">
+                  <div className="flex-shrink-0 mb-2 md:mb-0 hidden md:block">
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-xs md:text-sm font-semibold" style={{color: '#5C7F9A'}}>PROG</span>
                     </div>
                   </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>In Progress</h3>
-                    <p className="text-3xl font-bold" style={{color: '#5C7F9A'}}>
+                  <div className="md:ml-4">
+                    <h3 className="text-sm md:text-lg font-medium" style={{color: '#2E2E2E'}}>Progress</h3>
+                    <p className="text-xl md:text-3xl font-bold" style={{color: '#5C7F9A'}}>
                       {inquiries.filter(i => i.status === 'pending' || i.status === 'in-progress').length}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #10B981'}}>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
-                      <span className="text-xl">✓</span>
+              <div className="bg-white rounded-lg shadow-sm p-3 md:p-6" style={{borderLeft: '4px solid #10B981'}}>
+                <div className="flex flex-col md:flex-row md:items-center">
+                  <div className="flex-shrink-0 mb-2 md:mb-0 hidden md:block">
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-sm md:text-xl">✓</span>
                     </div>
                   </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>Confirmed</h3>
-                    <p className="text-3xl font-bold" style={{color: '#10B981'}}>
+                  <div className="md:ml-4">
+                    <h3 className="text-sm md:text-lg font-medium" style={{color: '#2E2E2E'}}>Confirmed</h3>
+                    <p className="text-xl md:text-3xl font-bold" style={{color: '#10B981'}}>
                       {inquiries.filter(i => i.status === 'confirmed').length}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm p-6" style={{borderLeft: '4px solid #EF4444'}}>
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
-                      <span className="text-xl">✕</span>
+              <div className="bg-white rounded-lg shadow-sm p-3 md:p-6" style={{borderLeft: '4px solid #EF4444'}}>
+                <div className="flex flex-col md:flex-row md:items-center">
+                  <div className="flex-shrink-0 mb-2 md:mb-0 hidden md:block">
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex items-center justify-center" style={{backgroundColor: '#F8F4EC'}}>
+                      <span className="text-sm md:text-xl">✕</span>
                     </div>
                   </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium" style={{color: '#2E2E2E'}}>Cancelled</h3>
-                    <p className="text-3xl font-bold" style={{color: '#EF4444'}}>
+                  <div className="md:ml-4">
+                    <h3 className="text-sm md:text-lg font-medium" style={{color: '#2E2E2E'}}>Cancelled</h3>
+                    <p className="text-xl md:text-3xl font-bold" style={{color: '#EF4444'}}>
                       {inquiries.filter(i => i.status === 'cancelled').length}
                     </p>
                   </div>
@@ -631,13 +631,13 @@ export default function UserDashboard() {
         {activeView === 'calendar' && (
           <div className="space-y-6">
             {/* Calendar */}
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="mb-4">
-                <h2 className="text-2xl font-bold mb-2" style={{color: '#B71C1C'}}>My Travel Calendar</h2>
-                <p className="text-sm" style={{color: '#8D6E63'}}>View all your travel plans and bookings</p>
+            <div className="bg-white rounded-lg shadow-md p-3 md:p-6">
+              <div className="mb-3 md:mb-4">
+                <h2 className="text-lg md:text-2xl font-bold mb-1 md:mb-2" style={{color: '#B71C1C'}}>My Travel Calendar</h2>
+                <p className="text-xs md:text-sm" style={{color: '#8D6E63'}}>View all your travel plans and bookings</p>
               </div>
               
-              <div style={{ height: '600px' }}>
+              <div className="h-96 md:h-[600px]">
                 <Calendar
                   localizer={localizer}
                   events={inquiries
@@ -686,8 +686,8 @@ export default function UserDashboard() {
                     })}
                   startAccessor="start"
                   endAccessor="end"
-                  style={{ height: 500 }}
-                  views={['month', 'week', 'day']}
+                  className="h-full"
+                  views={['month']}
                   defaultView='month'
                   date={calendarDate}
                   onNavigate={(date) => setCalendarDate(date)}

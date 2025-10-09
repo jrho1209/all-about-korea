@@ -68,30 +68,28 @@ export default function Hero() {
       </div>
 
       {/* 텍스트 콘텐츠 */}
-      <div className="relative z-10 text-center">
-        <h1 className="text-5xl font-extrabold mb-4 drop-shadow-lg" style={{color: '#2E2E2E'}}>
+      <div className="relative z-10 text-center px-4">
+        <h1 className="text-2xl md:text-5xl font-extrabold mb-3 md:mb-4 drop-shadow-lg" style={{color: '#2E2E2E'}}>
           Your Perfect Tour Mate in Daejeon
         </h1>
-        <p className="text-xl drop-shadow mb-2" style={{color: '#2E2E2E'}}>
+        <p className="text-sm md:text-xl drop-shadow mb-2" style={{color: '#2E2E2E'}}>
           Discover Amazing Places with Local Expert Guides
         </p>
-        <p className="text-lg drop-shadow mb-8 opacity-80" style={{color: '#2E2E2E'}}>
+        <p className="text-xs md:text-lg drop-shadow mb-6 md:mb-8 opacity-80" style={{color: '#2E2E2E'}}>
           Connect with trusted tour agencies for unforgettable experiences
         </p>
-        <div className="flex gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
           <Link 
             href="/agencies"
-            className="px-8 py-4 rounded-lg text-lg font-semibold transition-colors transform hover:scale-105 shadow-lg text-white hover:opacity-90"
+            className="text-white px-6 py-3 rounded-lg font-medium transition-colors hover:opacity-90 text-center"
             style={{backgroundColor: '#B71C1C'}}
           >
             Find Your Tour Mate
           </Link>
           <Link 
             href="/about"
-            className="px-8 py-4 rounded-lg text-lg font-semibold transition-colors transform hover:scale-105 shadow-lg hover:opacity-90 text-white"
-            style={{
-              backgroundColor: '#5C7F9A'
-            }}
+            className="text-white px-6 py-3 rounded-lg font-medium transition-colors hover:opacity-90 text-center"
+            style={{backgroundColor: '#5C7F9A'}}
           >
             Explore Tours
           </Link>
@@ -100,7 +98,7 @@ export default function Hero() {
 
       {/* 슬라이드 네비게이션 화살표 */}
       <button
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition-all duration-200 z-20"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition-all duration-200 z-20 hidden md:block"
         onClick={() => setCurrentSlide((prev) => (prev - 1 + backgroundImages.length) % backgroundImages.length)}
       >
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#2E2E2E" strokeWidth="2">
@@ -109,7 +107,7 @@ export default function Hero() {
       </button>
       
       <button
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition-all duration-200 z-20"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition-all duration-200 z-20 hidden md:block"
         onClick={() => setCurrentSlide((prev) => (prev + 1) % backgroundImages.length)}
       >
         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#2E2E2E" strokeWidth="2">

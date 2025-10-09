@@ -157,30 +157,21 @@ export default function Navbar() {
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
           >
-            <span className="flex items-center">
-              <span className="mr-3">ℹ️</span>
-              About
-            </span>
+            About
           </Link>
           <Link 
             href={session?.user ? "/agencies" : "/login"}
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
           >
-            <span className="flex items-center">
-              <span className="mr-3">🏢</span>
-              Agencies
-            </span>
+            Agencies
           </Link>
           <Link 
             href={session?.user ? "/food" : "/login"}
             onClick={closeMenu}
             className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
           >
-            <span className="flex items-center">
-              <span className="mr-3">🍜</span>
-              Food
-            </span>
+            Food
           </Link>
           {/* Mobile User Section */}
           <div className="border-t border-gray-200 pt-4 mt-4">
@@ -192,10 +183,7 @@ export default function Navbar() {
                     onClick={closeMenu}
                     className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
                   >
-                    <span className="flex items-center">
-                      <span className="mr-3">📊</span>
-                      Dashboard
-                    </span>
+                    Dashboard
                   </Link>
                 )}
                 {session.user?.role !== 'agency' && session.user?.email !== 'admin@allaboutkorea.com' && (
@@ -204,10 +192,7 @@ export default function Navbar() {
                     onClick={closeMenu}
                     className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
                   >
-                    <span className="flex items-center">
-                      <span className="mr-3">🌏</span>
-                      My Travel
-                    </span>
+                    My Travel
                   </Link>
                 )}
                 {session.user?.email === 'admin@allaboutkorea.com' && (
@@ -216,10 +201,7 @@ export default function Navbar() {
                     onClick={closeMenu}
                     className="block px-3 py-3 text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
                   >
-                    <span className="flex items-center">
-                      <span className="mr-3">⚙️</span>
-                      Admin
-                    </span>
+                    Admin
                   </Link>
                 )}
                 <div className="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-lg">
@@ -259,19 +241,13 @@ export default function Navbar() {
                   }}
                   className="w-full text-left px-3 py-3 text-red-600 hover:bg-red-50 transition-colors duration-200 font-medium rounded-lg"
                 >
-                  <span className="flex items-center">
-                    <span className="mr-3">🚪</span>
-                    Logout
-                  </span>
+                  Logout
                 </button>
               </div>
             ) : (
               <Link href="/login" onClick={closeMenu}>
                 <span className="block w-full px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white text-center rounded-lg font-medium hover:from-red-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
-                  <span className="flex items-center justify-center">
-                    <span className="mr-2">🔐</span>
-                    Login
-                  </span>
+                  Login
                 </span>
               </Link>
             )}
