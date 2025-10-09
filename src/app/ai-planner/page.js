@@ -46,6 +46,48 @@ export default function AIPlanner() {
     }));
   };
 
+  const generateNewPlan = () => {
+    // 사용자 확인
+    const confirmed = window.confirm(
+      'Are you sure you want to start over? This will clear all your current selections and the generated plan.'
+    );
+    
+    if (!confirmed) {
+      return;
+    }
+    
+    // 폼 데이터 초기화
+    setFormData({
+      travelDates: '',
+      duration: '',
+      customDuration: '',
+      groupSize: '',
+      totalBudget: '',
+      interests: [],
+      travelStyle: '',
+      accommodationType: '',
+      specialRequests: ''
+    });
+    
+    // 생성된 계획 제거
+    setGeneratedPlan(null);
+    
+    // 저장 메시지 제거
+    setSaveMessage('');
+    
+    // 로딩 상태 초기화
+    setIsGenerating(false);
+    setIsSaving(false);
+    
+    console.log('Form and plan data reset for new generation');
+    
+    // 페이지 상단으로 스크롤
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const generateAIPlan = async () => {
     if (!session) {
       router.push('/login');
@@ -53,49 +95,90 @@ export default function AIPlanner() {
     }
 
     setIsGenerating(true);
-    
-    // 실제 AI API 호출 대신 샘플 데이터로 시뮬레이션
-    setTimeout(() => {
-      const actualDuration = formData.duration === 'custom' ? formData.customDuration : formData.duration;
-      const samplePlan = {
-        title: `${actualDuration}-Day Customized Daejeon Trip`,
-        overview: `$${formData.totalBudget} total budget travel plan for ${formData.groupSize} people focusing on ${formData.interests.join(', ')}`,
-        itinerary: [
-          {
-            day: 1,
-            theme: 'Daejeon Science City Exploration',
-            activities: [
-              { time: '09:00', place: 'National Science Museum', description: 'Experience cutting-edge science at Korea\'s largest science museum' },
-              { time: '12:00', place: 'Expo Park', description: 'Lunch and stroll at the 1993 Daejeon Expo memorial park' },
-              { time: '15:00', place: 'Hanbat Arboretum', description: 'Natural relaxation space in the city center' },
-              { time: '18:00', place: 'Sungsimdang Main Store', description: 'Dinner at Daejeon\'s representative bakery' }
-            ]
-          },
-          {
-            day: 2,
-            theme: 'Harmony of Tradition and Modernity',
-            activities: [
-              { time: '10:00', place: 'Daecheong Lake', description: 'Enjoy beautiful lake scenery' },
-              { time: '13:00', place: 'Gyejoksan Yellow Clay Trail', description: 'Healing experience walking barefoot' },
-              { time: '16:00', place: 'Une Brand Cafe', description: 'Rest at a local Daejeon cafe' },
-              { time: '19:00', place: 'Time World', description: 'Night views and shopping combined' }
-            ]
+    setGeneratedPlan(null);
+
+    try {
+      console.log('Sending request to AI API...');
+      const response = await fetch('/api/ai-generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          formData: {
+            duration: formData.duration,
+            customDuration: formData.customDuration,
+            groupSize: formData.groupSize,
+            totalBudget: formData.totalBudget,
+            interests: formData.interests,
+            travelStyle: formData.travelStyle,
+            accommodationType: formData.accommodationType,
+            specialRequests: formData.specialRequests
           }
-        ],
-        recommendations: {
-          restaurants: ['Sungsimdang', 'Daejeon Station Legend', 'Baekje Galbi', 'Yong\'s Jokbal'],
-          accommodations: ['Raemian Pentaport', 'Holiday Inn Express', 'The Westin Chosun Daejeon'],
-          tips: [
-            'We recommend using Hanaro Card for Daejeon public transportation',
-            'Visit Sungsimdang on weekday mornings for the best experience',
-            'Comfortable shoes are essential for Gyejoksan Yellow Clay Trail'
+        })
+      });
+
+      console.log('Response status:', response.status);
+      
+      if (response.ok) {
+        const aiPlan = await response.json();
+        console.log('AI plan received:', aiPlan);
+        setGeneratedPlan(aiPlan);
+      } else {
+        const errorData = await response.json();
+        console.error('API error:', errorData);
+        throw new Error(`API error: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error generating AI plan:', error);
+      alert(`AI 플랜 생성 중 오류가 발생했습니다: ${error.message}\n\n기본 플랜을 생성합니다.`);
+      // 에러 발생 시 기본 플랜으로 폴백
+      generateFallbackPlan();
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const generateFallbackPlan = () => {
+    const actualDuration = formData.duration === 'custom' ? formData.customDuration : formData.duration;
+    const samplePlan = {
+      title: `${actualDuration}일 대전 현지인 추천 여행`,
+      overview: `$${formData.totalBudget} 예산으로 ${formData.groupSize} 그룹을 위한 대전 현지 맛집과 명소 중심 여행`,
+      itinerary: [
+        {
+          day: 1,
+          theme: '대전 도심 & 현지 맛집 탐방',
+          activities: [
+            { time: '09:00', place: '성심당 본점', description: '대전의 아침은 성심당 튀김소보로로 시작', address: '대전광역시 중구 대종로480번길 15' },
+            { time: '10:30', place: '대전 중앙시장', description: '70년 전통 재래시장에서 현지 문화 체험', address: '대전광역시 중구 대종로 488' },
+            { time: '12:00', place: '왕관식당', description: '현지인들이 즐겨 찾는 국밥집에서 점심', address: '대전광역시 중구 보문로 246' },
+            { time: '18:00', place: '용\'s족발', description: '대전 현지인들의 저녁 맛집', address: '대전광역시 중구 중앙로121번길 33' }
+          ]
+        },
+        {
+          day: 2,
+          theme: '자연과 힐링',
+          activities: [
+            { time: '09:00', place: '한밭수목원', description: '도심 속 거대한 자연 공간에서 산책', address: '대전광역시 서구 둔산대로 169' },
+            { time: '14:00', place: '대청호 오백리길', description: '호수를 따라 걷는 아름다운 산책로', address: '대전광역시 동구 추동' },
+            { time: '19:00', place: '유성온천', description: '천연 알칼리성 온천에서 하루 마무리', address: '대전광역시 유성구 온천로' }
           ]
         }
-      };
-      
-      setGeneratedPlan(samplePlan);
-      setIsGenerating(false);
-    }, 2000);
+      ],
+      recommendations: {
+        restaurants: ['성심당 본점', '용\'s족발', '백제갈비', '왕관식당', '칼국수 명가'],
+        accommodations: ['라마다 앙코르 대전', '호텔 ICC 대전', '유성 관광호텔'],
+        localTips: [
+          '성심당은 평일 오전에 가세요 - 줄이 짧아요',
+          '대청호는 일몰 시간이 가장 아름다워요',
+          '유성온천은 저녁 9시 이후가 한적해서 좋아요',
+          '지하철 1호선으로 대부분 명소에 갈 수 있어요',
+          '현지인들은 "어디 가유?"라고 말해요'
+        ]
+      }
+    };
+    
+    setGeneratedPlan(samplePlan);
   };
 
   const saveTravelPlan = async () => {
@@ -123,7 +206,9 @@ export default function AIPlanner() {
           groupSize: formData.groupSize,
           totalBudget: formData.totalBudget,
           interests: formData.interests,
-          travelStyle: formData.travelStyle
+          travelStyle: formData.travelStyle,
+          accommodationType: formData.accommodationType,
+          specialRequests: formData.specialRequests
         }
       };
 
@@ -304,25 +389,52 @@ export default function AIPlanner() {
                 />
               </div>
 
-              {/* 생성 버튼 */}
-              <button
-                onClick={generateAIPlan}
-                disabled={isGenerating || !formData.duration || !formData.groupSize || !formData.totalBudget}
-                className="w-full py-4 rounded-lg font-semibold text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{backgroundColor: '#B71C1C'}}
-              >
-                {isGenerating ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    AI is generating your travel plan...
-                  </span>
-                ) : (
-                  'Generate AI Travel Plan'
-                )}
-              </button>
+              {/* 폼 제어 버튼들 */}
+              <div className="space-y-3">
+                {/* Reset Form 버튼 */}
+                <button
+                  onClick={() => {
+                    const confirmed = window.confirm('Are you sure you want to reset all form fields?');
+                    if (confirmed) {
+                      setFormData({
+                        travelDates: '',
+                        duration: '',
+                        customDuration: '',
+                        groupSize: '',
+                        totalBudget: '',
+                        interests: [],
+                        travelStyle: '',
+                        accommodationType: '',
+                        specialRequests: ''
+                      });
+                      setSaveMessage('');
+                    }
+                  }}
+                  className="w-full py-2 rounded-lg font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors border border-gray-300"
+                >
+                  🗑️ Reset Form
+                </button>
+
+                {/* 생성 버튼 */}
+                <button
+                  onClick={generateAIPlan}
+                  disabled={isGenerating || !formData.duration || !formData.groupSize || !formData.totalBudget}
+                  className="w-full py-4 rounded-lg font-semibold text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{backgroundColor: '#B71C1C'}}
+                >
+                  {isGenerating ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      AI is generating your travel plan...
+                    </span>
+                  ) : (
+                    'Generate AI Travel Plan'
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         ) : (
@@ -339,10 +451,10 @@ export default function AIPlanner() {
                   </p>
                 </div>
                 <button
-                  onClick={() => setGeneratedPlan(null)}
-                  className="px-4 py-2 text-sm bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
+                  onClick={generateNewPlan}
+                  className="px-4 py-2 text-sm bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors border border-gray-300"
                 >
-                  Generate New
+                  Start Over
                 </button>
               </div>
 
@@ -360,13 +472,23 @@ export default function AIPlanner() {
                           <span className="text-sm font-medium text-gray-500 min-w-[50px]">
                             {activity.time}
                           </span>
-                          <div>
+                          <div className="flex-1">
                             <p className="font-medium text-sm md:text-base" style={{color: '#2E2E2E'}}>
                               {activity.place}
                             </p>
-                            <p className="text-xs md:text-sm text-gray-600">
+                            <p className="text-xs md:text-sm text-gray-600 mb-1">
                               {activity.description}
                             </p>
+                            {activity.address && (
+                              <p className="text-xs text-gray-500">
+                                📍 {activity.address}
+                              </p>
+                            )}
+                            {activity.localTip && (
+                              <p className="text-xs text-blue-600 mt-1">
+                                💡 {activity.localTip}
+                              </p>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -396,11 +518,11 @@ export default function AIPlanner() {
                 </div>
               </div>
 
-              {/* Travel Tips */}
+              {/* Local Tips */}
               <div className="mt-6">
-                <h4 className="font-bold text-base mb-3" style={{color: '#2E2E2E'}}>💡 Travel Tips</h4>
+                <h4 className="font-bold text-base mb-3" style={{color: '#2E2E2E'}}>🏠 현지인 팁</h4>
                 <ul className="space-y-1">
-                  {generatedPlan.recommendations.tips.map((tip, idx) => (
+                  {(generatedPlan.recommendations.localTips || generatedPlan.recommendations.tips || []).map((tip, idx) => (
                     <li key={idx} className="text-sm text-gray-600">• {tip}</li>
                   ))}
                 </ul>

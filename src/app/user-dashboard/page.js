@@ -20,6 +20,8 @@ export default function UserDashboard() {
   const [activeInquiryTab, setActiveInquiryTab] = useState('in-progress'); // 'in-progress', 'confirmed', 'cancelled'
   const [replyMessages, setReplyMessages] = useState({}); // Store reply messages for each inquiry
   const [calendarDate, setCalendarDate] = useState(new Date()); // Calendar navigation state
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
 
   // Safe date formatting functions
   const formatDate = (dateValue) => {
@@ -119,6 +121,10 @@ export default function UserDashboard() {
       if (response.ok) {
         // 성공적으로 삭제되면 목록에서 제거
         setSavedTravelPlans(prev => prev.filter(plan => plan._id !== planId));
+        // 모달이 열려있고 현재 선택된 플랜이 삭제된 플랜이면 모달 닫기
+        if (showDetailModal && selectedPlan && selectedPlan._id === planId) {
+          closeDetailModal();
+        }
       } else {
         const result = await response.json();
         alert('Failed to delete travel plan: ' + (result.error || 'Unknown error'));
@@ -127,6 +133,18 @@ export default function UserDashboard() {
       console.error('Error deleting travel plan:', error);
       alert('Failed to delete travel plan. Please try again.');
     }
+  };
+
+  // View plan details function
+  const viewPlanDetails = (plan) => {
+    setSelectedPlan(plan);
+    setShowDetailModal(true);
+  };
+
+  // Close modal function
+  const closeDetailModal = () => {
+    setShowDetailModal(false);
+    setSelectedPlan(null);
   };
 
   const getStatusColor = (status) => {
@@ -949,6 +967,7 @@ export default function UserDashboard() {
                           <button 
                             className="px-4 py-2 text-sm text-white rounded-lg transition-colors hover:opacity-90"
                             style={{backgroundColor: '#B71C1C'}}
+                            onClick={() => viewPlanDetails(plan)}
                           >
                             View Details
                           </button>
@@ -1014,6 +1033,197 @@ export default function UserDashboard() {
           </div>
         )}
       </div>
+
+      {/* Travel Plan Detail Modal */}
+      {showDetailModal && selectedPlan && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">{selectedPlan.title}</h2>
+                <p className="text-gray-600 mt-1">{selectedPlan.overview}</p>
+              </div>
+              <button 
+                onClick={closeDetailModal}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              {/* Trip Information */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 p-4 bg-gray-50 rounded-lg">
+                <div className="text-center">
+                  <div className="text-2xl mb-1">⏱️</div>
+                  <div className="text-sm text-gray-600">Duration</div>
+                  <div className="font-semibold">
+                    {selectedPlan.formData.duration === 'custom' 
+                      ? `${selectedPlan.formData.customDuration} days` 
+                      : `${selectedPlan.formData.duration} days`}
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl mb-1">👥</div>
+                  <div className="text-sm text-gray-600">Group Size</div>
+                  <div className="font-semibold">{selectedPlan.formData.groupSize}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl mb-1">💰</div>
+                  <div className="text-sm text-gray-600">Budget</div>
+                  <div className="font-semibold">${selectedPlan.formData.totalBudget}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl mb-1">🎯</div>
+                  <div className="text-sm text-gray-600">Style</div>
+                  <div className="font-semibold capitalize">{selectedPlan.formData.travelStyle}</div>
+                </div>
+              </div>
+
+              {/* Interests */}
+              <div className="mb-8">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">Interests</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedPlan.formData.interests.map((interest, index) => (
+                    <span 
+                      key={index}
+                      className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
+                    >
+                      {interest}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Detailed Itinerary */}
+              <div className="mb-8">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Detailed Itinerary</h3>
+                <div className="space-y-6">
+                  {selectedPlan.itinerary.map((day, dayIndex) => (
+                    <div key={dayIndex} className="border border-gray-200 rounded-lg overflow-hidden">
+                      <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                        <h4 className="text-xl font-bold text-gray-900">Day {day.day}: {day.theme}</h4>
+                      </div>
+                      <div className="p-6">
+                        <div className="space-y-4">
+                          {day.activities.map((activity, actIndex) => (
+                            <div key={actIndex} className="border-l-4 border-blue-500 pl-4 py-2">
+                              <div className="flex items-start space-x-4">
+                                <div className="font-bold text-blue-600 min-w-0 w-16">{activity.time}</div>
+                                <div className="flex-1">
+                                  <h5 className="font-bold text-gray-900 mb-1">{activity.place}</h5>
+                                  <p className="text-gray-700 mb-2">{activity.description}</p>
+                                  {activity.address && (
+                                    <div className="text-sm text-gray-600 mb-1">
+                                      <span className="font-medium">📍 Address:</span> {activity.address}
+                                    </div>
+                                  )}
+                                  {activity.contact && (
+                                    <div className="text-sm text-gray-600 mb-1">
+                                      <span className="font-medium">📞 Contact:</span> {activity.contact}
+                                    </div>
+                                  )}
+                                  {activity.localTip && (
+                                    <div className="text-sm text-blue-700 bg-blue-50 p-2 rounded mt-2">
+                                      <span className="font-medium">💡 Local Tip:</span> {activity.localTip}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Recommendations */}
+              {selectedPlan.recommendations && (
+                <div className="space-y-6">
+                  {/* Restaurants */}
+                  {selectedPlan.recommendations.restaurants && selectedPlan.recommendations.restaurants.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-3">🍽️ Recommended Restaurants</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {selectedPlan.recommendations.restaurants.map((restaurant, index) => (
+                          <div key={index} className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                            <span className="font-medium text-orange-800">{restaurant}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Accommodations */}
+                  {selectedPlan.recommendations.accommodations && selectedPlan.recommendations.accommodations.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-3">🏨 Recommended Accommodations</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {selectedPlan.recommendations.accommodations.map((accommodation, index) => (
+                          <div key={index} className="bg-green-50 border border-green-200 rounded-lg p-3">
+                            <span className="font-medium text-green-800">{accommodation}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Local Tips */}
+                  {selectedPlan.recommendations.localTips && selectedPlan.recommendations.localTips.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-3">💡 Local Tips</h3>
+                      <div className="space-y-2">
+                        {selectedPlan.recommendations.localTips.map((tip, index) => (
+                          <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                            <span className="text-blue-800">{tip}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Plan Metadata */}
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                  <div>
+                    <span className="font-medium">Saved on:</span> {formatDate(selectedPlan.savedAt)}
+                  </div>
+                  <div>
+                    <span className="font-medium">Plan ID:</span> {selectedPlan._id}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6 flex justify-end space-x-3">
+              <button 
+                onClick={closeDetailModal}
+                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Close
+              </button>
+              <button 
+                onClick={() => deleteTravelPlan(selectedPlan._id)}
+                className="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Delete Plan
+              </button>
+              <button className="px-4 py-2 text-white rounded-lg transition-colors hover:opacity-90" style={{backgroundColor: '#B71C1C'}}>
+                Export Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
