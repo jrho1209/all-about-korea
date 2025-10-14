@@ -44,6 +44,13 @@ const pageConfig = {
     gradient: "from-slate-300 via-slate-200 to-slate-300",
     bgGradient: "#D4C4A8",
     emoji: "🔐"
+  },
+  "/pricing": {
+    title: "Choose Your Plan",
+    subtitle: "Unlock Premium Travel Planning Features",
+    gradient: "from-green-300 via-emerald-300 to-green-300",
+    bgGradient: "#D4C4A8",
+    emoji: "💎"
   }
 };
 
