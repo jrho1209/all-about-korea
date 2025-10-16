@@ -3,29 +3,29 @@ import { usePathname } from "next/navigation";
 
 const pageConfig = {
   "/": {
-    title: "All About Korea",
-    subtitle: "Tour Mate Platform - Connect with Korean Culture",
+    title: "Dol-E",
+    subtitle: "Perfect Travel Platform for Korea Enthusiasts",
     gradient: "from-red-300 via-orange-200 to-yellow-200",
     bgGradient: "#D4C4A8",
     emoji: "🇰🇷"
   },
   "/about": {
-    title: "About Tour Mate",
-    subtitle: "Building Cultural Bridges Through Authentic Friendships",
+    title: "About Dol-E",
+    subtitle: "Special Travel Experiences with Local Korean Friends",
     gradient: "from-blue-300 via-slate-300 to-red-300",
     bgGradient: "#D4C4A8",
     emoji: "👨‍💻"
   },
   "/agencies": {
-    title: "Tour Mates",
-    subtitle: "Connect with Verified Local Cultural Guides",
+    title: "Travel Buddies",
+    subtitle: "Verified Local Korean Friends for Authentic Experiences",
     gradient: "from-red-300 via-orange-300 to-red-300",
     bgGradient: "#D4C4A8",
     emoji: "🏢"
   },
   "/food": {
-    title: "Korean Food",
-    subtitle: "Discover Authentic Flavors & Hidden Local Gems",
+    title: "Food Experts",
+    subtitle: "Authentic Local Restaurant Recommendations",
     gradient: "from-orange-300 via-yellow-300 to-orange-300",
     bgGradient: "#D4C4A8",
     emoji: "🍜"
@@ -40,14 +40,14 @@ const pageConfig = {
   },
   "/login": {
     title: "Welcome Back",
-    subtitle: "Login to Access Tour Mate Platform",
+    subtitle: "Login to Access Dol-E Platform",
     gradient: "from-slate-300 via-slate-200 to-slate-300",
     bgGradient: "#D4C4A8",
     emoji: "🔐"
   },
   "/pricing": {
     title: "Choose Your Plan",
-    subtitle: "Unlock Premium Travel Planning Features",
+    subtitle: "Premium Plans for Korea Travel Enthusiasts",
     gradient: "from-green-300 via-emerald-300 to-green-300",
     bgGradient: "#D4C4A8",
     emoji: "💎"

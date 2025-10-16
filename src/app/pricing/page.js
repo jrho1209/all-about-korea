@@ -76,7 +76,7 @@ export default function PricingPage() {
   const faqs = [
     {
       question: "Can I cancel my subscription anytime?",
-      answer: "Yes, you can cancel your subscription at any time. You'll continue to have access to premium features until the end of your current billing period."
+      answer: "Yes, you can cancel your subscription at any time. You\'ll continue to have access to premium features until the end of your current billing period."
     },
     {
       question: "What payment methods do you accept?",
@@ -92,7 +92,7 @@ export default function PricingPage() {
     },
     {
       question: "Do you offer refunds?",
-      answer: "We offer a 7-day money-back guarantee for new subscriptions. Contact our support team if you're not satisfied."
+      answer: "We offer a 7-day money-back guarantee for new subscriptions. Contact our support team if you\'re not satisfied."
     }
   ];
 
@@ -219,7 +219,7 @@ export default function PricingPage() {
 
                   {/* Features */}
                   <div className="mb-8">
-                    <h4 className="font-semibold text-gray-900 mb-4">What's included:</h4>
+                    <h4 className="font-semibold text-gray-900 mb-4">What&apos;s included:</h4>
                     <ul className="space-y-3">
                       {plan.features.map((feature, index) => (
                         <li key={index} className="flex items-start">

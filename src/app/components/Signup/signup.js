@@ -131,8 +131,8 @@ export default function Signup() {
         {/* 로고 */}
         <div className="mb-6 w-full bg-white rounded-lg py-4 flex justify-center">
           <img
-            src="/logo/logo.png"
-            alt="All About Korea Logo"
+            src="/logo/dol-e-logo.png"
+            alt="Dol-E Logo"
             className="h-16 w-auto"
           />
         </div>

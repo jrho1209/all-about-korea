@@ -14,10 +14,10 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="md:col-span-1">
             <h3 className="text-2xl font-black mb-4" style={{color: '#B71C1C'}}>
-              All About Korea
+              Dol-E
             </h3>
             <p className="text-sm leading-relaxed mb-6" style={{color: '#8D6E63'}}>
-              Your perfect tour mate platform. Connect with local friends for authentic cultural exchange and unforgettable experiences in Daejeon.
+              Perfect platform for Korea travel enthusiasts. Create special cultural exchanges and unforgettable experiences with authentic Korean locals.
             </p>
           </div>
 
@@ -29,13 +29,13 @@ export default function Footer() {
                 About
               </Link>
               <Link href="/agencies" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
-                Travel Agencies
+                Travel Buddies
               </Link>
               <Link href="/food" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
-                Korean Food
+                Food Experts
               </Link>
               <Link href="/signup" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
-                Join as Tour Mate
+                Become a Local Friend
               </Link>
               <Link href="/login" className="block hover:opacity-80 transition-colors text-sm" style={{color: '#8D6E63'}}>
                 Login
@@ -75,8 +75,8 @@ export default function Footer() {
             <h4 className="text-lg font-bold mb-6" style={{color: '#F8F4EC'}}>Contact Us</h4>
             <div className="space-y-4">
               <div className="text-sm" style={{color: '#8D6E63'}}>
-                <span className="block font-semibold mb-1" style={{color: '#F8F4EC'}}>All About Korea Team</span>
-                Your trusted tour mate platform in Daejeon
+                <span className="block font-semibold mb-1" style={{color: '#F8F4EC'}}>Dol-E Team</span>
+                Trusted Korea travel platform for international visitors
               </div>
               
               <div className="space-y-3">
@@ -109,7 +109,7 @@ export default function Footer() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm" style={{color: '#8D6E63'}}>
-              &copy; {new Date().getFullYear()} All About Korea. All rights reserved.
+              &copy; {new Date().getFullYear()} Dol-E. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="hover:opacity-80 transition-colors" style={{color: '#8D6E63'}}>
@@ -119,7 +119,7 @@ export default function Footer() {
                 Terms of Service
               </Link>
               <span style={{color: '#8D6E63'}}>
-                Made with ❤️ for Cultural Exchange
+                Made with ❤️ for Korea Travel Enthusiasts
               </span>
             </div>
           </div>

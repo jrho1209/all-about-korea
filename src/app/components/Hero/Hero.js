@@ -70,13 +70,13 @@ export default function Hero() {
       {/* 텍스트 콘텐츠 */}
       <div className="relative z-10 text-center px-4">
         <h1 className="text-2xl md:text-5xl font-extrabold mb-3 md:mb-4 drop-shadow-lg" style={{color: '#2E2E2E'}}>
-          Your Perfect Tour Mate in Daejeon
+          Perfect Korea Travel with Local Friends
         </h1>
         <p className="text-sm md:text-xl drop-shadow mb-2" style={{color: '#2E2E2E'}}>
-          Discover Amazing Places with Local Expert Guides
+          Special Travel Experiences with Authentic Korean Locals
         </p>
         <p className="text-xs md:text-lg drop-shadow mb-6 md:mb-8 opacity-80" style={{color: '#2E2E2E'}}>
-          Connect with trusted tour agencies for unforgettable experiences
+          Connect with verified local friends for unforgettable memories
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
           <Link 
@@ -84,7 +84,7 @@ export default function Hero() {
             className="text-white px-6 py-3 rounded-lg font-medium transition-colors hover:opacity-90 text-center"
             style={{backgroundColor: '#B71C1C'}}
           >
-            Find Your Tour Mate
+            Find Your Local Friend
           </Link>
           <Link 
             href="/ai-planner"

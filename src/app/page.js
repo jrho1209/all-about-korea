@@ -12,10 +12,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-xl md:text-3xl font-bold mb-3 md:mb-4" style={{color: '#2E2E2E'}}>
-              Why Choose Our Tour Mate Platform?
+              Why Choose Dol-E?
             </h2>
             <p className="text-sm md:text-xl max-w-3xl mx-auto" style={{color: '#8D6E63'}}>
-              Beyond ordinary city tours - Connect with local mates for authentic cultural exchange and lifelong friendships.
+              Beyond ordinary tours - Connect with authentic Korean locals for genuine cultural exchange and lifelong friendships.
             </p>
           </div>
           

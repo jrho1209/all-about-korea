@@ -11,11 +11,11 @@ export default function About() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black mb-8" style={{color: '#B71C1C'}}>
-              Tour Mate <span style={{color: '#2E2E2E'}}>Platform</span>
+              Dol-E <span style={{color: '#2E2E2E'}}>Platform</span>
             </h2>
             <p className="text-xl max-w-4xl mx-auto leading-relaxed" style={{color: '#8D6E63'}}>
-              A trusted platform connecting international travelers with local friends and cultural guides. 
-              Experience authentic Korean culture and build meaningful friendships beyond traditional tourism.
+              A trusted platform connecting international travelers with authentic Korean locals. 
+              Experience genuine Korean culture and build meaningful friendships beyond traditional tourism.
             </p>
           </div>
 

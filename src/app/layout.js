@@ -4,18 +4,18 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
 export const metadata = {
-  title: "Daejeon Travel Platform",
-  description: "Connect with trusted local travel agencies in Daejeon - Experience safe and extraordinary journeys through Korea's science city",
+  title: "Dol-E - Korea Travel Agent",
+  description: "Connect with authentic Korean locals for special travel experiences - Your perfect platform for Korea travel enthusiasts",
   icons: {
     icon: [
-      { url: '/logo/brandicon.png?v=3', sizes: '32x32', type: 'image/png' },
-      { url: '/logo/brandicon.png?v=3', sizes: '16x16', type: 'image/png' },
+      { url: '/logo/dol-e-favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo/dol-e-favicon.png', sizes: '16x16', type: 'image/png' },
     ],
-    shortcut: '/logo/brandicon.png?v=3',
-    apple: '/logo/brandicon.png?v=3',
+    shortcut: '/logo/dol-e-favicon.png',
+    apple: '/logo/dol-e-favicon.png',
     other: {
       rel: 'apple-touch-icon-precomposed',
-      url: '/logo/brandicon.png?v=3',
+      url: '/logo/dol-e-favicon.png',
     },
   },
 };
