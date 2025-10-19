@@ -2,22 +2,28 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function SubscriptionPage() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [subscriptionStatus, setSubscriptionStatus] = useState('loading');
+  const { data: session, update } = useSession();
 
   useEffect(() => {
     if (sessionId) {
-      // Here we would typically verify the session with Stripe
-      // For now, we'll assume success
       setSubscriptionStatus('success');
+      
+      // 구독 성공 후 세션 강제 업데이트 (한 번만)
+      if (session && !sessionStorage.getItem('subscription_updated')) {
+        update();
+        sessionStorage.setItem('subscription_updated', 'true');
+      }
     } else {
       setSubscriptionStatus('no_session');
     }
-  }, [sessionId]);
+  }, [sessionId, session, update]);
 
   if (subscriptionStatus === 'loading') {
     return (

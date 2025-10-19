@@ -59,9 +59,14 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('Stripe checkout error:', error);
+    console.error('Stripe checkout error details:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      type: error.type
+    });
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: 'Failed to create checkout session', details: error.message },
       { status: 500 }
     );
   }

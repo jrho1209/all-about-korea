@@ -47,7 +47,7 @@ export const authOptions = {
   session: {
     strategy: "jwt",
     maxAge: 60 * 60, // 1시간 (초 단위)
-    updateAge: 60 * 10, // 10분마다 갱신
+    updateAge: 60 * 5, // 5분마다 갱신 (구독 정보 업데이트를 위해 단축)
   },
   callbacks: {
     async jwt({ token, user, account }) {
@@ -59,11 +59,28 @@ export const authOptions = {
           token.picture = user.image;
         }
       }
+      
+      // 매번 JWT 토큰 갱신시 최신 구독 정보 가져오기
+      if (token.email) {
+        try {
+          const client = await clientPromise;
+          const db = client.db('allaboutkorea');
+          const users = db.collection("users");
+          const userDoc = await users.findOne({ email: token.email });
+          if (userDoc?.subscription) {
+            token.subscription = userDoc.subscription;
+          }
+        } catch (error) {
+          console.error("Error fetching subscription:", error);
+        }
+      }
+      
       return token;
     },
     async session({ session, token }) {
       session.user.role = token.role;
       session.user.agencyId = token.agencyId;
+      session.user.subscription = token.subscription;
       // 세션에 프로필 이미지 추가
       session.user.image = token.picture || session.user.image;
       return session;

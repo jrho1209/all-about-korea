@@ -17,7 +17,6 @@ export default function PricingPage() {
       id: 'FREE',
       name: 'Free',
       price: '$0',
-      yearlyPrice: '$0',
       period: 'forever',
       description: 'Perfect for exploring Korea',
       features: [
@@ -34,9 +33,7 @@ export default function PricingPage() {
       id: 'BASIC',
       name: 'Basic',
       price: '$9.99',
-      yearlyPrice: '$99',
       period: '/month',
-      yearlyPeriod: '/year',
       description: 'Great for occasional travelers',
       features: [
         'AI Travel Planner - 30 uses/month',
@@ -47,16 +44,13 @@ export default function PricingPage() {
       ],
       buttonText: 'Get Started',
       highlighted: true,
-      popular: true,
-      savings: 'Save $20/year'
+      popular: true
     },
     {
       id: 'PREMIUM',
       name: 'Premium',
       price: '$19.99',
-      yearlyPrice: '$199',
       period: '/month',
-      yearlyPeriod: '/year',
       description: 'For frequent Korea travelers',
       features: [
         'Unlimited AI Travel Planner',
@@ -68,8 +62,7 @@ export default function PricingPage() {
       ],
       buttonText: 'Go Premium',
       highlighted: false,
-      popular: false,
-      savings: 'Save $40/year'
+      popular: false
     }
   ];
 
@@ -152,34 +145,7 @@ export default function PricingPage() {
       <div className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           
-          {/* Billing Toggle */}
-          <div className="flex justify-center mb-12">
-            <div className="bg-white p-1 rounded-lg shadow-sm border">
-              <button
-                onClick={() => setBillingCycle('monthly')}
-                className={`px-6 py-2 rounded-md font-medium transition-all ${
-                  billingCycle === 'monthly'
-                    ? 'bg-red-600 text-white shadow-md'
-                    : 'text-gray-600 hover:text-gray-800'
-                }`}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setBillingCycle('yearly')}
-                className={`px-6 py-2 rounded-md font-medium transition-all ${
-                  billingCycle === 'yearly'
-                    ? 'bg-red-600 text-white shadow-md'
-                    : 'text-gray-600 hover:text-gray-800'
-                }`}
-              >
-                Yearly
-                <span className="ml-1 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                  Save up to 17%
-                </span>
-              </button>
-            </div>
-          </div>
+          {/* Billing Toggle Removed */}
 
           {/* Pricing Cards */}
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
@@ -289,12 +255,6 @@ export default function PricingPage() {
                     <td className="py-4 px-6 text-center text-red-500">✗</td>
                     <td className="py-4 px-6 text-center text-green-500">✓</td>
                     <td className="py-4 px-6 text-center text-green-500">✓</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-6 text-gray-700">Priority Support</td>
-                    <td className="py-4 px-6 text-center text-red-500">✗</td>
-                    <td className="py-4 px-6 text-center text-green-500">✓</td>
-                    <td className="py-4 px-6 text-center text-green-500">✓ + Live Chat</td>
                   </tr>
                   <tr>
                     <td className="py-4 px-6 text-gray-700">Travel Discounts</td>
