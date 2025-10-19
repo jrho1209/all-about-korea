@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import LoginRequired from '../components/LoginRequired/LoginRequired';
 export default function AIPlanner() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [subscriptionError, setSubscriptionError] = useState(null);
   const [formData, setFormData] = useState({
     travelDates: '',
     duration: '',
@@ -24,6 +25,24 @@ export default function AIPlanner() {
   const [generatedPlan, setGeneratedPlan] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+
+  // 구독 상태 체크
+  useEffect(() => {
+    if (session?.user) {
+      const userPlan = session.user.plan || session.user.subscription?.plan || 'FREE';
+      const userStatus = session.user.status || session.user.subscription?.status || 'inactive';
+      
+      // FREE 플랜이거나 비활성 상태면 접근 차단
+      if (userPlan === 'FREE' || userStatus !== 'active') {
+        setSubscriptionError({
+          plan: userPlan,
+          status: userStatus
+        });
+      } else {
+        setSubscriptionError(null);
+      }
+    }
+  }, [session]);
 
   const interestOptions = [
     'Culture/History', 'Nature/Scenery', 'Food/Dining', 'Shopping', 'Science/Technology', 
@@ -252,6 +271,53 @@ export default function AIPlanner() {
           "Export and share your plans"
         ]}
       />
+    );
+  }
+
+  // 구독이 필요한 경우 구독 안내 페이지 표시
+  if (subscriptionError) {
+    return (
+      <div className="min-h-screen" style={{backgroundColor: '#F8F4EC'}}>
+        <div className="max-w-2xl mx-auto px-4 py-16 text-center">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              Premium Subscription Required
+            </h1>
+            
+            <p className="text-gray-600 mb-6">
+              The AI Travel Planner is a premium feature. You need an active subscription to access personalized AI travel planning.
+            </p>
+            
+            <div className="bg-gray-50 rounded-lg p-4 mb-6">
+              <p className="text-sm text-gray-700">
+                <strong>Current Status:</strong> {subscriptionError.plan} Plan ({subscriptionError.status})
+              </p>
+            </div>
+            
+            <div className="space-y-4">
+              <Link 
+                href="/pricing"
+                className="block w-full bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+              >
+                Upgrade to Premium
+              </Link>
+              
+              <Link 
+                href="/"
+                className="block w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+              >
+                Back to Home
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
