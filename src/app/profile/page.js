@@ -15,11 +15,12 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (session?.user) {
+      console.log('Session user data:', session.user); // 디버깅
       setSubscription({
-        plan: session.user.plan || 'FREE',
-        status: session.user.status || 'inactive',
-        currentPeriodEnd: session.user.currentPeriodEnd || null,
-        stripeSubscriptionId: session.user.stripeSubscriptionId || null
+        plan: session.user.plan || session.user.subscription?.plan || 'FREE',
+        status: session.user.status || session.user.subscription?.status || 'inactive',
+        currentPeriodEnd: session.user.currentPeriodEnd || session.user.subscription?.currentPeriodEnd || null,
+        stripeSubscriptionId: session.user.stripeSubscriptionId || session.user.subscription?.stripeSubscriptionId || null
       });
       setLoading(false);
     }

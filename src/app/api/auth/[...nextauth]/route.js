@@ -80,9 +80,20 @@ export const authOptions = {
     async session({ session, token }) {
       session.user.role = token.role;
       session.user.agencyId = token.agencyId;
-      session.user.subscription = token.subscription;
+      
+      // 구독 정보를 세션에 추가
+      if (token.subscription) {
+        session.user.subscription = token.subscription;
+        session.user.plan = token.subscription.plan;
+        session.user.status = token.subscription.status;
+        session.user.currentPeriodEnd = token.subscription.currentPeriodEnd;
+        session.user.stripeSubscriptionId = token.subscription.stripeSubscriptionId;
+      }
+      
       // 세션에 프로필 이미지 추가
       session.user.image = token.picture || session.user.image;
+      
+      console.log('Session callback - user:', session.user); // 디버깅
       return session;
     },
   },

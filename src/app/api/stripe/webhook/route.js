@@ -39,18 +39,47 @@ export async function POST(req) {
   }
 
   const permittedEvents = [
+    // 체크아웃 관련
     'checkout.session.completed',
+    'checkout.session.async_payment_succeeded',
+    'checkout.session.async_payment_failed',
+    
+    // 구독 관련
     'customer.subscription.created',
     'customer.subscription.updated',
     'customer.subscription.deleted',
+    'customer.subscription.trial_will_end',
+    
+    // 고객 관련
+    'customer.created',
+    'customer.updated',
+    'customer.deleted',
+    
+    // 인보이스 관련
+    'invoice.created',
+    'invoice.finalized',
     'invoice.payment_succeeded',
     'invoice.payment_failed',
+    'invoice.payment_action_required',
+    'invoice.paid',
+    
+    // 결제 관련
+    'payment_intent.created',
+    'payment_intent.succeeded',
+    'payment_intent.payment_failed',
+    'payment_method.attached',
+    
+    // 요금 관련
+    'charge.succeeded',
+    'charge.failed',
+    'charge.dispute.created',
   ];
 
   if (permittedEvents.includes(event.type)) {
     try {
       switch (event.type) {
         case 'checkout.session.completed':
+        case 'checkout.session.async_payment_succeeded':
           await handleCheckoutCompleted(event.data.object);
           break;
         case 'customer.subscription.created':
@@ -61,12 +90,32 @@ export async function POST(req) {
           await handleSubscriptionDeleted(event.data.object);
           break;
         case 'invoice.payment_succeeded':
-          // optional: handle invoice payment success
+        case 'invoice.paid':
+          // 구독 갱신 시 구독 정보 업데이트
+          if (event.data.object.subscription) {
+            const subscription = await stripe.subscriptions.retrieve(event.data.object.subscription);
+            await handleSubscriptionUpdated(subscription);
+          }
           break;
         case 'invoice.payment_failed':
-          // optional: handle invoice payment failure
+        case 'checkout.session.async_payment_failed':
+        case 'payment_intent.payment_failed':
+          // 결제 실패 처리 (필요시 구독 상태 업데이트)
+          console.log('Payment failed for:', event.data.object);
+          break;
+        case 'customer.created':
+        case 'customer.updated':
+        case 'payment_intent.created':
+        case 'payment_intent.succeeded':
+        case 'payment_method.attached':
+        case 'charge.succeeded':
+        case 'invoice.created':
+        case 'invoice.finalized':
+          // 로그만 남기고 특별한 처리 없음
+          console.log('Received event:', event.type);
           break;
         default:
+          console.log('Unhandled event type:', event.type);
           break;
       }
     } catch (error) {
