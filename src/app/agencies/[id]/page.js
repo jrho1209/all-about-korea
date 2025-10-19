@@ -97,6 +97,16 @@ export default function AgencyDetailPage() {
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
+    
+    // 구독 상태 체크
+    const userPlan = session?.user?.plan || session?.user?.subscription?.plan || 'FREE';
+    const userStatus = session?.user?.status || session?.user?.subscription?.status || 'inactive';
+    
+    if (userPlan === 'FREE' || userStatus !== 'active') {
+      showToast('🔒 Premium subscription required to send inquiries. Please upgrade your plan to contact agencies.', 'error');
+      return;
+    }
+    
     const formData = new FormData(e.target);
     
     if (!startDate || !endDate) {
