@@ -68,7 +68,17 @@ STEP-BY-STEP ANALYSIS REQUIRED:
    - Travel style: ${formData.travelStyle || 'general'} - adjust pace and activity intensity accordingly
    - Accommodation preference: ${formData.accommodationType || 'any type'}
 
-3. SPECIAL REQUIREMENTS (CRITICAL - MUST FOLLOW):
+3. HOTEL & ACCOMMODATION PLANNING:
+   - Hotel preference: ${formData.hotelPreference || 'standard hotel'}
+   - MUST include specific hotel recommendations that match the preference level
+   - Consider hotel location for daily itinerary planning
+   - FOR 2+ DAY TRIPS: MANDATORY hotel check-in scheduling
+     * Day 1: Include hotel check-in at 3:00 PM (15:00)
+     * Allow 40 minutes for check-in process
+     * Next activity should start at 3:40 PM (15:40) or later
+     * Plan Day 1 morning/early afternoon activities before check-in
+
+4. SPECIAL REQUIREMENTS (CRITICAL - MUST FOLLOW):
    ${formData.specialRequests ? `- IMPORTANT SPECIAL REQUESTS: ${formData.specialRequests}` : '- No special requests specified'}
    - ABSOLUTELY MUST incorporate all special requirements into every recommendation
    - If user dislikes certain foods/places, NEVER recommend them
@@ -76,19 +86,24 @@ STEP-BY-STEP ANALYSIS REQUIRED:
    - Filter out ANY venues that conflict with special requests
    - Double-check all restaurant and activity recommendations against special requests
 
-4. LOGICAL FLOW PLANNING:
+5. LOGICAL FLOW PLANNING:
    - Consider geographical proximity of locations
    - Account for opening hours and best visiting times
    - Balance meals, activities, and travel time
    - Factor in group size for restaurant capacity and activity suitability
+   - HOTEL CHECK-IN TIMING (for 2+ day trips):
+     * Day 1: Plan activities until 3:00 PM, then hotel check-in
+     * After check-in (3:40 PM+): Light activities near hotel or evening plans
+     * Ensure realistic travel time to hotel before 3:00 PM
 
-5. LOCAL DATA INTEGRATION:
+6. LOCAL DATA INTEGRATION:
    Use ONLY the following verified local information:
 
 RESTAURANTS (with exact details):
 ${localRecommendations.restaurants.map(r => 
   `• ${r.name}
-    Address: ${r.address}
+    Address (Korean): ${r.addressKorean || r.address}
+    Address (English): ${r.address}
     Phone: ${r.phone}
     Description: ${r.description}
     Local Insider Tip: ${r.localTip}
@@ -147,6 +162,13 @@ MANDATORY CONSTRAINTS (MUST FOLLOW):
    ✓ Plan logical travel sequences (nearby locations together)
    ✓ Account for attraction best visiting times
    ✓ Allow realistic travel time between locations
+   ✓ HOTEL CHECK-IN SCHEDULING (for ${duration >= 2 ? duration + '-day trips' : 'multi-day trips'}):
+     * Day 1 example timeline:
+       - 09:00-12:00: Morning activities
+       - 12:00-14:00: Lunch + travel to hotel area
+       - 15:00: Hotel check-in (MANDATORY for 2+ day trips)
+       - 15:40: Next activity (after 40-min check-in buffer)
+       - Evening: Dinner and night activities near hotel
 
 5. AUTHENTICITY REQUIREMENTS:
    ✓ Include specific local dialect phrases and cultural insights
@@ -167,7 +189,8 @@ OUTPUT FORMAT (STRICT JSON):
           "time": "HH:MM",
           "place": "EXACT name from local data",
           "description": "Detailed description in English",
-          "address": "EXACT address from local data",
+          "address": "EXACT Korean address from local data (use Korean format: 대전광역시 중구 대종로480번길 15)",
+          "addressEnglish": "English translation of address for display",
           "localTip": "Insider tip only locals would know",
           "contact": "EXACT phone number from local data or empty string"
         }
@@ -176,8 +199,15 @@ OUTPUT FORMAT (STRICT JSON):
   ],
   "recommendations": {
     "restaurants": ["Names from provided data only"],
-    "accommodations": ["Local accommodation suggestions"],
-    "localTips": ["Cultural and practical insights"]
+    "accommodations": [
+      {
+        "name": "Specific hotel name matching preference level",
+        "type": "Hotel type (luxury/premium/standard/budget)",
+        "location": "District/area in Daejeon",
+        "reason": "Why this hotel fits the travel style and budget"
+      }
+    ],
+    "localTips": ["Cultural and practical insights including hotel booking tips"]
   }
 }
 
@@ -190,6 +220,9 @@ VALIDATION CHECKLIST BEFORE RESPONDING:
 □ Cultural insights are authentic and specific
 □ CRITICAL: All special requests are respected (NO conflicting recommendations)
 □ If user dislikes bread/bakery, NO bakery recommendations
+□ HOTEL REQUIREMENTS: Include appropriate hotel recommendations based on preference level
+□ HOTEL CHECK-IN TIMING (2+ days): Day 1 includes 3:00 PM check-in with 40-min buffer
+□ SCHEDULE FLOW: Activities after check-in start at 3:40 PM or later
 □ If user has dietary restrictions, ALL restaurants must accommodate them
 
 IMPORTANT: Please respond ONLY in English for international visitors.

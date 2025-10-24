@@ -170,3 +170,9 @@ body {
   vertical-align: top !important;
 }
 
+/* 지도 로딩 애니메이션 */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+

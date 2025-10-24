@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import LoginRequired from '../components/LoginRequired/LoginRequired';
+import TravelItineraryMap from '../components/TravelMap/TravelItineraryMap';
 
 export default function AIPlanner() {
   const { data: session } = useSession();
@@ -19,6 +20,7 @@ export default function AIPlanner() {
     interests: [],
     travelStyle: '',
     accommodationType: '',
+    hotelPreference: '',
     specialRequests: ''
   });
   const [isGenerating, setIsGenerating] = useState(false);
@@ -86,6 +88,7 @@ export default function AIPlanner() {
       interests: [],
       travelStyle: '',
       accommodationType: '',
+      hotelPreference: '',
       specialRequests: ''
     });
     
@@ -133,6 +136,7 @@ export default function AIPlanner() {
             interests: formData.interests,
             travelStyle: formData.travelStyle,
             accommodationType: formData.accommodationType,
+            hotelPreference: formData.hotelPreference,
             specialRequests: formData.specialRequests
           }
         })
@@ -228,6 +232,7 @@ export default function AIPlanner() {
           interests: formData.interests,
           travelStyle: formData.travelStyle,
           accommodationType: formData.accommodationType,
+          hotelPreference: formData.hotelPreference,
           specialRequests: formData.specialRequests
         }
       };
@@ -458,6 +463,28 @@ export default function AIPlanner() {
                 </select>
               </div>
 
+              {/* Hotel Preference */}
+              <div>
+                <label className="block text-sm font-medium mb-2" style={{color: '#2E2E2E'}}>
+                  Hotel Preference
+                </label>
+                <select
+                  name="hotelPreference"
+                  value={formData.hotelPreference}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                >
+                  <option value="">Please select</option>
+                  <option value="luxury">Luxury Hotel (5★)</option>
+                  <option value="premium">Premium Hotel (4★)</option>
+                  <option value="standard">Standard Hotel (3★)</option>
+                  <option value="budget">Budget Hotel (2★)</option>
+                  <option value="guesthouse">Guesthouse/Hostel</option>
+                  <option value="hanok">Traditional Korean Hanok</option>
+                  <option value="pension">Pension/Villa</option>
+                </select>
+              </div>
+
               {/* Special Requests */}
               <div>
                 <label className="block text-sm font-medium mb-2" style={{color: '#2E2E2E'}}>
@@ -489,6 +516,7 @@ export default function AIPlanner() {
                         interests: [],
                         travelStyle: '',
                         accommodationType: '',
+                        hotelPreference: '',
                         specialRequests: ''
                       });
                       setSaveMessage('');
@@ -581,6 +609,15 @@ export default function AIPlanner() {
                 ))}
               </div>
 
+              {/* Travel Map */}
+              {generatedPlan.itinerary && generatedPlan.itinerary.length > 0 && (
+                <div className="mt-8">
+                  <TravelItineraryMap 
+                    itinerary={generatedPlan.itinerary}
+                  />
+                </div>
+              )}
+
               {/* Recommendations */}
               <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -594,9 +631,25 @@ export default function AIPlanner() {
                 
                 <div>
                   <h4 className="font-bold text-base mb-3" style={{color: '#2E2E2E'}}>🏨 Recommended Accommodations</h4>
-                  <ul className="space-y-1">
+                  <ul className="space-y-3">
                     {generatedPlan.recommendations.accommodations.map((accommodation, idx) => (
-                      <li key={idx} className="text-sm text-gray-600">• {accommodation}</li>
+                      <li key={idx} className="text-sm text-gray-600 border-l-2 border-red-200 pl-3">
+                        {typeof accommodation === 'string' ? (
+                          <span>• {accommodation}</span>
+                        ) : (
+                          <div>
+                            <div className="font-semibold text-gray-800">• {accommodation.name}</div>
+                            <div className="text-xs text-gray-500 mt-1">
+                              {accommodation.type} - {accommodation.location}
+                            </div>
+                            {accommodation.reason && (
+                              <div className="text-xs text-gray-600 mt-1 italic">
+                                {accommodation.reason}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </li>
                     ))}
                   </ul>
                 </div>
