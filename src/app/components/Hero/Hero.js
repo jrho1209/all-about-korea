@@ -11,7 +11,9 @@ export default function Hero() {
     '/hero/hero1.jpg',
     '/hero/hero2.jpg', 
     '/hero/hero3.jpg',
-    '/hero/hero4.jpg'
+    '/hero/hero4.jpg',
+    '/hero/hero5.jpg',
+    '/hero/hero6.jpg'
   ];
 
   // 자동 슬라이드
@@ -46,7 +48,7 @@ export default function Hero() {
         <div 
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(135deg, rgba(248, 244, 236, 0.7) 0%, rgba(141, 110, 99, 0.7) 100%)`
+            background: `linear-gradient(135deg, rgba(248, 244, 236, 0.3) 0%, rgba(141, 110, 99, 0.3) 100%)`
           }}
         />
       </div>
@@ -69,13 +71,25 @@ export default function Hero() {
 
       {/* 텍스트 콘텐츠 */}
       <div className="relative z-10 text-center px-4">
-        <h1 className="text-2xl md:text-5xl font-extrabold mb-3 md:mb-4 drop-shadow-lg" style={{color: '#2E2E2E'}}>
-          Perfect Korea Travel with Local Friends
+        <h1 className="text-2xl md:text-5xl font-extrabold mb-3 md:mb-4" 
+            style={{
+              color: '#FFFFFF',
+              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8), 0px 0px 8px rgba(0, 0, 0, 0.6)'
+            }}>
+          Perfect DaeJeon Travel with Local Friends
         </h1>
-        <p className="text-sm md:text-xl drop-shadow mb-2" style={{color: '#2E2E2E'}}>
+        <p className="text-sm md:text-xl mb-2" 
+           style={{
+             color: '#FFFFFF',
+             textShadow: '1px 1px 3px rgba(0, 0, 0, 0.8), 0px 0px 6px rgba(0, 0, 0, 0.6)'
+           }}>
           Special Travel Experiences with Authentic Korean Locals
         </p>
-        <p className="text-xs md:text-lg drop-shadow mb-6 md:mb-8 opacity-80" style={{color: '#2E2E2E'}}>
+        <p className="text-xs md:text-lg mb-6 md:mb-8 opacity-90" 
+           style={{
+             color: '#FFFFFF',
+             textShadow: '1px 1px 3px rgba(0, 0, 0, 0.8), 0px 0px 6px rgba(0, 0, 0, 0.6)'
+           }}>
           Connect with verified local friends for unforgettable memories
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
