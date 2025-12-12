@@ -3,7 +3,7 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
   SKIP_ENV_VALIDATION = "true"
 
 [context.production.environment]
