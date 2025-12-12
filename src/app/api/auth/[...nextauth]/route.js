@@ -6,6 +6,11 @@ import clientPromise from "./lib/mongodb"; // MongoDB 연결 유틸
 import bcrypt from "bcryptjs";
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/login',
+    error: '/login',
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,

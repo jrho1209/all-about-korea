@@ -7,10 +7,10 @@ let client;
 let clientPromise;
 
 if (!process.env.MONGODB_URI) {
-  throw new Error("Please add your Mongo URI to .env.local");
-}
-
-if (process.env.NODE_ENV === "development") {
+  console.warn("Warning: MONGODB_URI is not defined");
+  // 빌드 시에는 빈 Promise를 반환하여 에러 방지
+  clientPromise = Promise.resolve(null);
+} else if (process.env.NODE_ENV === "development") {
   if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
     global._mongoClientPromise = client.connect();

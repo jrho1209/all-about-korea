@@ -4,6 +4,10 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  SKIP_ENV_VALIDATION = "true"
+
+[context.production.environment]
+  NEXT_PHASE = "phase-production-build"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
