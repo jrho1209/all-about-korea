@@ -30,21 +30,30 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const client = await clientPromise;
-        const db = client.db();
-        const users = db.collection("manual_users");
-        const user = await users.findOne({ email: credentials.email });
-        if (!user) return null;
-        const isValid = await bcrypt.compare(credentials.password, user.password);
-        if (!isValid) return null;
-        return {
-          id: user._id.toString(),
-          name: user.name,
-          email: user.email,
-          phone: user.phone,
-          role: user.role || 'user',
-          agencyId: user.agencyId,
-        };
+        try {
+          const client = await clientPromise;
+          if (!client) {
+            console.error("MongoDB client not available");
+            return null;
+          }
+          const db = client.db();
+          const users = db.collection("manual_users");
+          const user = await users.findOne({ email: credentials.email });
+          if (!user) return null;
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isValid) return null;
+          return {
+            id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            role: user.role || 'user',
+            agencyId: user.agencyId,
+          };
+        } catch (error) {
+          console.error("Error in credentials authorize:", error);
+          return null;
+        }
       },
     }),
   ],
@@ -69,11 +78,13 @@ export const authOptions = {
       if (token.email) {
         try {
           const client = await clientPromise;
-          const db = client.db('allaboutkorea');
-          const users = db.collection("users");
-          const userDoc = await users.findOne({ email: token.email });
-          if (userDoc?.subscription) {
-            token.subscription = userDoc.subscription;
+          if (client) {
+            const db = client.db('allaboutkorea');
+            const users = db.collection("users");
+            const userDoc = await users.findOne({ email: token.email });
+            if (userDoc?.subscription) {
+              token.subscription = userDoc.subscription;
+            }
           }
         } catch (error) {
           console.error("Error fetching subscription:", error);
